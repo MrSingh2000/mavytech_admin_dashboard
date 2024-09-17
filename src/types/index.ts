@@ -13,3 +13,32 @@ export type EquipmentType = {
   userManual: string;
   serviceManual: string;
 };
+export type ApprovalType = {
+  _id: string;
+  name: string;
+  machineModel: string;
+  description: string;
+  image: string;
+  userManual: string;
+  serviceManual: string;
+  approved: boolean;
+  createdAt: string;
+
+};
+
+
+export type AdvertisementType = {
+  _id: string;
+  title: string;
+  url: string;
+  thumbnail: string;
+  targetCity: string[];
+  targetCountry: string[];
+  active: string;
+};
+
+export type DocumentType = {
+  _id: string;
+  title: string;
+  url: string;
+};

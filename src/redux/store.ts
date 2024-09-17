@@ -4,6 +4,9 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from './saga/rootSaga';
 import equipmentSlice from './slices/equipmentSlice';
 import loadingSlice from './slices/loadingSlice';
+import documentSlice from './slices/documentSlice';
+import advertisementSlice from './slices/advertisementSlice';
+import approvalSlice from './slices/approvalSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -11,7 +14,10 @@ export const store = configureStore({
   reducer: {
     counter: counterSlice,
     equipment: equipmentSlice,
+    document: documentSlice,
     loading: loadingSlice,
+    advertisement: advertisementSlice,
+    approval: approvalSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([sagaMiddleware]),

@@ -5,7 +5,11 @@ const axiosInstance = axios.create();
 
 // Request interceptor
 axiosInstance.interceptors.request.use((config) => {
-  const accessToken = getLocalStorageItem('authToken');
+  // const accessToken = getLocalStorageItem('authToken');
+  const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmUxZDA1MjQxNGZlNjViM2I3NWViMGIiLCJuYW1lIjoiZGVtbyBuYW1lIiwiZW1haWwiOiJkZW1vMUBnbWFpbC5jb20iLCJkb2IiOiIxMDAwMSA3Nzg4IiwicGhvbmUiOiIyMTMyMzIxMzIzMiIsImltYWdlVXJsIjoiIiwicm9sZSI6InVzZXIiLCJjcmVhdGVkQXQiOiIyMDI0LTA5LTExVDE3OjE2OjAyLjYwNVoiLCJ1cGRhdGVkQXQiOiIyMDI0LTA5LTExVDE3OjE2OjAyLjYwNVoiLCJfX3YiOjAsImlhdCI6MTcyNjE0OTM5MiwiZXhwIjoxNzI4NzQxMzkyfQ.1pkkISmfTRE1aY7Zjyzl2lO_ZwCDOYeOdM6fROrpQFU';
+
+  config.baseURL = 'http://192.168.1.33:5000';
+  
   const headers = {
     Authorization: `Bearer ${accessToken}`,
   };

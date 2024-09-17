@@ -1,7 +1,10 @@
 import { ReactElement } from 'react';
-import { IoHomeOutline } from 'react-icons/io5';
+import { IoDocumentsOutline, IoHomeOutline } from 'react-icons/io5';
 import { TbWashMachine } from 'react-icons/tb';
+import { PiTelevisionDuotone } from "react-icons/pi";
 import { NavLink } from 'react-router-dom';
+import { MdOutlineApproval } from 'react-icons/md';
+import { FaRegFlag } from "react-icons/fa";
 
 type NavItemType = {
   icon: ReactElement;
@@ -20,6 +23,26 @@ function SideNav() {
       icon: <TbWashMachine />,
       title: 'Equipment',
       navLink: '/equipment',
+    },
+    {
+      icon: <PiTelevisionDuotone />,
+      title: 'Advertisement',
+      navLink: '/advertisement',
+    },
+    {
+      icon: <IoDocumentsOutline />,
+      title: 'Documents',
+      navLink: '/documents',
+    },
+    {
+      icon: <MdOutlineApproval />,
+      title: 'Approvals',
+      navLink: '/approval',
+    },
+    {
+      icon: <FaRegFlag/>,
+      title: 'Flagged Post',
+      navLink: '/flagged',
     },
   ];
 
