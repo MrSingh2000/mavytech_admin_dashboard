@@ -5,6 +5,10 @@ import Layout from './components/layout/Layout';
 import Equipment from './pages/Equipment';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Advertisement from './pages/Advertisement';
+import Documents from './pages/Documents';
+import Approval from './pages/Approval';
+import Flagged from './pages/Flagged';
 
 function App() {
   return (
@@ -25,8 +29,14 @@ function App() {
         <Route path="/" Component={Layout}>
           <Route path="" Component={Home} />
           <Route path="equipment" Component={Equipment} />
+          <Route path="advertisement" Component={Advertisement} />
+          <Route path="documents" Component={Documents} />
+          <Route path="approval" Component={Approval} />
+          <Route path="flagged" Component={Flagged}/>
         </Route>
       </Routes>
+
+
     </>
   );
 }
