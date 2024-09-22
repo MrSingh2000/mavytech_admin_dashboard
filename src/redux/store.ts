@@ -7,6 +7,9 @@ import loadingSlice from './slices/loadingSlice';
 import documentSlice from './slices/documentSlice';
 import advertisementSlice from './slices/advertisementSlice';
 import approvalSlice from './slices/approvalSlice';
+import usersSlice, { updateUserAction } from './slices/usersSlice';
+import flaggedSlice from './slices/flaggedSlice';
+import authSlice from './slices/authSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -18,9 +21,19 @@ export const store = configureStore({
     loading: loadingSlice,
     advertisement: advertisementSlice,
     approval: approvalSlice,
+    users: usersSlice,
+    flagged: flaggedSlice,
+    auth: authSlice,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([sagaMiddleware]),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [
+          updateUserAction.type
+        ],
+        ignoredPath: ['payload.formData']
+      }
+    }).concat([sagaMiddleware]),
 });
 
 sagaMiddleware.run(rootSaga);

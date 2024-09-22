@@ -4,7 +4,8 @@ import { TbWashMachine } from 'react-icons/tb';
 import { PiTelevisionDuotone } from "react-icons/pi";
 import { NavLink } from 'react-router-dom';
 import { MdOutlineApproval } from 'react-icons/md';
-import { FaRegFlag } from "react-icons/fa";
+import { FaRegFlag, FaRegUserCircle } from "react-icons/fa";
+import { Avatar } from 'primereact/avatar';
 
 type NavItemType = {
   icon: ReactElement;
@@ -43,6 +44,11 @@ function SideNav() {
       icon: <FaRegFlag/>,
       title: 'Flagged Post',
       navLink: '/flagged',
+    },
+    {
+      icon: <FaRegUserCircle/>,
+      title: 'Users',
+      navLink: '/allusers',
     },
   ];
 

@@ -2,6 +2,7 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   getApprovalsAction,
   updateApprovalsAction,
+  setApprovals
 } from '../slices/approvalSlice';
 import { setLoading } from '../slices/loadingSlice';
 import axiosInstance from '../../api-util/api';
@@ -17,7 +18,7 @@ function* getApprovals(action: any): any {
     );
 
     console.log('resopnse: ', response.data.value);
-    yield put(getApprovalsAction(response.data.value));
+    yield put(setApprovals(response.data.value));
 
 //yield put(updateApprovals(response.data.value));
 
@@ -37,7 +38,7 @@ function* updateApproval(action: any): any {
       createUrl(`${endpoints.approval.update}/${action.payload}`),
       action.payload
     );
-    yield put({type: getApprovalsAction.type})
+    yield put({type: setApprovals.type})
 
     yield put(setLoading(false));
   } catch (error) {

@@ -7,6 +7,10 @@ import {
 import { watchDeleteDocumentSaga, watchGetDocumentsSaga, watchCreateDocumentSaga } from './documentSaga';
 import { watchCreateAdvertisementSaga, watchUpdateAdvertisementSaga,watchGetAdvertisementSaga } from './advertisementSaga';
 import { watchGetApprovalSaga, watchUpdateApprovalSaga } from './approvalSaga';
+import { watchAcceptFlaggedSaga, watchGetFlaggedSaga, watchRejectFlaggedSaga } from './flaggedSaga';
+import { watchGetUsersSaga, watchUpdateUserSaga } from './usersSaga';
+import { watchUserLogin } from './authSaga';
+
 export default function* rootSaga() {
   yield all([
     fork(watchGetEquipmentSaga),
@@ -19,6 +23,12 @@ export default function* rootSaga() {
     fork(watchCreateAdvertisementSaga),
     fork(watchUpdateAdvertisementSaga),
     fork(watchGetApprovalSaga),
-    fork(watchUpdateApprovalSaga)
+    fork(watchUpdateApprovalSaga),
+    fork(watchAcceptFlaggedSaga),
+    fork(watchRejectFlaggedSaga),
+    fork(watchGetFlaggedSaga),
+    fork(watchGetUsersSaga),
+    fork(watchUpdateUserSaga),
+    fork(watchUserLogin)
   ]);
 }

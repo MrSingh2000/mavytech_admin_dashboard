@@ -3,7 +3,8 @@ import {
   createAdvertisementAction,
   getAdvertisementsAction,
   deleteAdvertisementAction,
-  updateAdvertisements,
+  updateAdvertisementAction,
+  setAdvertisements,
 } from '../slices/advertisementSlice';
 import { setLoading } from '../slices/loadingSlice';
 import axiosInstance from '../../api-util/api';
@@ -16,12 +17,12 @@ function* getAdvertisements(action: any): any {
 
     const response = yield call(
       axiosInstance.get,
-      createUrl(endpoints.advertisement.fetchAll)
+      endpoints.advertisement.fetchAll
     );
 
     console.log('respnse: ', response.data.value);
 
-    yield put(updateAdvertisements(response.data.value));
+    yield put(setAdvertisements(response.data.value));
 
     yield put(setLoading(false));
   } catch (error) {
@@ -36,9 +37,31 @@ function* saveAdvertisement(action: any): any {
 
     const response = yield call(
       axiosInstance.post,
-      createUrl(endpoints.advertisement.create),
+      endpoints.advertisement.create,
       action.payload
     );
+
+    console.log('respnse: ', response);
+
+    yield put({type: getAdvertisementsAction.type})
+
+    yield put(setLoading(false));
+  } catch (error) {
+    yield put(setLoading(false));
+  }
+}
+
+function* updateAdvertisement(action: any): any {
+  try {
+    yield put(setLoading(true));
+
+    const response = yield call(
+      axiosInstance.put,
+      `${endpoints.advertisement.update}/${action.payload.id}`,
+      action.payload.data
+    );
+
+    yield put({ type: getAdvertisementsAction.type });
 
     console.log('respnse: ', response);
 
@@ -54,7 +77,7 @@ function* deleteAdvertisement(action: any): any {
 
     yield call(
       axiosInstance.delete,
-      createUrl(`${endpoints.advertisement.delete}/${action.payload}`),
+      `${endpoints.advertisement.delete}/${action.payload}`,
       action.payload
     );
 
@@ -74,6 +97,10 @@ export function* watchCreateAdvertisementSaga() {
   yield takeEvery(createAdvertisementAction.type, saveAdvertisement);
 }
 
-export function* watchUpdateAdvertisementSaga() {
+export function* watchDeleteAdvertisementSaga() {
   yield takeEvery(deleteAdvertisementAction.type, deleteAdvertisement);
 }
+export function* watchUpdateAdvertisementSaga() {
+  yield takeEvery(updateAdvertisementAction.type, updateAdvertisement);
+}
+

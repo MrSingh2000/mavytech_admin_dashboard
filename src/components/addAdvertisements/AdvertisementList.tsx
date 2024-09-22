@@ -9,7 +9,7 @@ import { createUrl } from '../../helper/functions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { AdvertisementType } from '../../types';
-import { deleteAdvertisementAction } from '../../redux/slices/advertisementSlice';
+import { deleteAdvertisementAction, updateAdvertisementAction } from '../../redux/slices/advertisementSlice';
 
 type Props = {
   setSelectedAdvertisement: React.Dispatch<
@@ -24,9 +24,9 @@ function AdvertisementList(props: Props) {
   );
 
   return (
-    <div className="container ">
+    <div className="container">
     
-      <div className="py-8">
+      <div className="flex-1 py-8 ">
         <div className="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
           <div className="inline-block min-w-full overflow-scroll rounded-lg shadow" style={{
                 height: '30rem', 
@@ -34,7 +34,7 @@ function AdvertisementList(props: Props) {
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none',
             }}>
-            <table >
+            <table className='m-auto'>
               <thead className="sticky top-0 z-10">
                 <tr>
                   <th
@@ -103,15 +103,22 @@ type ItemProps = Props & {
 };
 
 const ListItem = ({data, setSelectedAdvertisement}: ItemProps) => {
-
-  const [isActive, setIsActive] = useState(false);
-
-  // Function to toggle the active state
-  const handleToggle = () => {
-    setIsActive((prevState) => !prevState); // Toggle the state
-  };
-
   const dispatch = useDispatch();
+
+  const [isActive, setIsActive] = useState(data.active);
+  const handleToggle = () => {
+    const updatedData = {
+      targetCity: data.targetCity,
+      targetCountry: data.targetCountry,
+      active: !isActive
+    };
+    setIsActive(!isActive);
+
+    dispatch({
+      type: updateAdvertisementAction.type,
+      payload: { data: updatedData, id: data._id },
+    });
+  };
   const handleOpenAd = (url: string) => {
     window.open(url, '_blank');
   };
