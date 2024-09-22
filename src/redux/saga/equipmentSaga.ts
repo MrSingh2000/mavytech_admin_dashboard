@@ -16,7 +16,7 @@ function* getEquipments(action: any): any {
 
     const response = yield call(
       axiosInstance.get,
-      createUrl(endpoints.equipment.fetchAll)
+      endpoints.equipment.fetchAll
     );
 
     console.log('respnse: ', response.data.value);
@@ -36,7 +36,7 @@ function* saveEquipment(action: any): any {
 
     const response = yield call(
       axiosInstance.post,
-      createUrl(endpoints.equipment.create),
+      endpoints.equipment.create,
       action.payload
     );
 
@@ -54,7 +54,7 @@ function* deleteEquipment(action: any): any {
 
     yield call(
       axiosInstance.delete,
-      createUrl(`${endpoints.equipment.delete}/${action.payload}`),
+      `${endpoints.equipment.delete}/${action.payload}`,
       action.payload
     );
 

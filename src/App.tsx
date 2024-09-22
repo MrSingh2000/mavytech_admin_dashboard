@@ -9,6 +9,8 @@ import Advertisement from './pages/Advertisement';
 import Documents from './pages/Documents';
 import Approval from './pages/Approval';
 import Flagged from './pages/Flagged';
+import UserList from './pages/UserList';
+import AuthForm from './pages/LogIn';
 
 function App() {
   return (
@@ -26,17 +28,17 @@ function App() {
         theme="light"
       />
       <Routes>
+        <Route path="/login" Component={AuthForm}/>
         <Route path="/" Component={Layout}>
           <Route path="" Component={Home} />
           <Route path="equipment" Component={Equipment} />
           <Route path="advertisement" Component={Advertisement} />
           <Route path="documents" Component={Documents} />
           <Route path="approval" Component={Approval} />
-          <Route path="flagged" Component={Flagged}/>
+          <Route path="flagged" Component={Flagged} />
+          <Route path="allusers" Component={UserList} />
         </Route>
       </Routes>
-
-
     </>
   );
 }

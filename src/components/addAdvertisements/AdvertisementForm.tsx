@@ -1,11 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { MultiSelect } from 'primereact/multiselect';
-import countriesData from './countries.json'; 
+import countriesData from './countries.json';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/saga-green/theme.css';
 import axiosInstance from '../../api-util/api';
 import endpoints from '../../api-util/endpoints';
 import { AdvertisementType } from '../../types';
+import { updateAdvertisementAction } from '../../redux/slices/advertisementSlice';
+import { useDispatch } from 'react-redux';
 
 type Props = {
   selectedAdvertisement: AdvertisementType | null;
@@ -14,13 +16,19 @@ type Props = {
   >;
 };
 
-function AdvertisementForm({selectedAdvertisement, setSelectedAdvertisement}: Props){
+function AdvertisementForm({
+  selectedAdvertisement,
+  setSelectedAdvertisement,
+}: Props) {
+  const dispatch = useDispatch();
   const initialFormData = {
     title: '',
     url: '',
     targetCity: [],
-    targetCountry: []
+    targetCountry: [],
   };
+
+  const isEditing = !!selectedAdvertisement;
 
   const [formData, setFormData] = useState<{
     title: string;
@@ -33,23 +41,14 @@ function AdvertisementForm({selectedAdvertisement, setSelectedAdvertisement}: Pr
   const [fileName, setFileName] = useState<string>(''); // New state to store the file name
   const fileInputRef = useRef<HTMLInputElement | null>(null); // Reference to the file input element
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const selectedFile = e.target.files[0];
-      setFile(selectedFile);
-      setFileName(selectedFile.name); // Store the file name
-    }
-  };
-
   const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
   const [selectedStates, setSelectedStates] = useState<string[]>([]);
-  const [countryOptions, setCountryOptions] = useState<{ label: string; value: string }[]>([]);
-  const [stateOptions, setStateOptions] = useState<{ label: string; value: string }[]>([]);
+  const [countryOptions, setCountryOptions] = useState<
+    { label: string; value: string }[]
+  >([]);
+  const [stateOptions, setStateOptions] = useState<
+    { label: string; value: string }[]
+  >([]);
 
   useEffect(() => {
     // Transform JSON data into country options
@@ -65,47 +64,99 @@ function AdvertisementForm({selectedAdvertisement, setSelectedAdvertisement}: Pr
     const states = selectedCountries.flatMap(
       (country) => countriesData[country] || []
     );
-    const stateOptions = states.map((state) => ({ label: state, value: state }));
+    const stateOptions = states.map((state) => ({
+      label: state,
+      value: state,
+    }));
     setStateOptions(stateOptions);
   }, [selectedCountries]);
+
+  // Update the form when selectedAdvertisement is available
+  useEffect(() => {
+    if (selectedAdvertisement) {
+      setFormData({
+        title: selectedAdvertisement.title,
+        url: selectedAdvertisement.url,
+        targetCity: selectedAdvertisement.targetCity || [],
+        targetCountry: selectedAdvertisement.targetCountry || [],
+      });
+
+      // Set countries and states
+      setSelectedCountries(selectedAdvertisement.targetCountry || []);
+      setSelectedStates(selectedAdvertisement.targetCity || []);
+
+      // Set the file name (if there's an image associated with the advertisement)
+      setFileName(selectedAdvertisement.thumbnail || '');
+    } else {
+      setFormData(initialFormData);
+      setSelectedCountries([]);
+      setSelectedStates([]);
+      setFileName('');
+    }
+  }, [selectedAdvertisement]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFile = e.target.files[0];
+      setFile(selectedFile);
+      setFileName(selectedFile.name); // Store the file name
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!file || !formData.title || !formData.url || !formData.targetCity || !formData.targetCountry) {
-      alert("Please fill the form properly.");
-      return;
-    }
+    
 
-    const data = new FormData();
-    data.append('title', formData.title);
-    data.append('url', formData.url);
-    data.append('thumbnail', file);
-    selectedStates.forEach((state) => {
-      data.append('targetCity[]', state);
-    });
-    selectedCountries.forEach((country) => {
-      data.append('targetCountry[]', country);
-    });
+    if (isEditing && selectedAdvertisement && selectedCountries.length != 0) {
+      const updatedData = {
+        targetCity: selectedStates,
+        targetCountry: selectedCountries,
+        active: selectedAdvertisement.active,
+      };
 
-    await axiosInstance({
-      url: `${endpoints.advertisement.create}`,
-      method: 'post',
-      data,
-    });
+      dispatch({
+        type: updateAdvertisementAction.type,
+        payload: { data: updatedData, id: selectedAdvertisement._id },
+      });
+    } else {
+      if (!file || !formData.title || !formData.url || !formData.targetCountry) {
+        alert('Please fill the form properly.');
+        return;
+      }
+      const data = new FormData();
+      data.append('title', formData.title);
+      data.append('url', formData.url);
+      data.append('thumbnail', file!);
+      selectedStates.forEach((state) => {
+        data.append('targetCity[]', state);
+      });
+      selectedCountries.forEach((country) => {
+        data.append('targetCountry[]', country);
+      });
 
-   
+      await axiosInstance({
+        url: `${endpoints.advertisement.create}`,
+        method: 'post',
+        data,
+      });
 
-    // Reset form inputs
-    setFormData(initialFormData);
-    setFile(null);
-    setFileName('');
-    setSelectedCountries([]);
-    setSelectedStates([]);
+      // Reset form inputs
+      setFormData(initialFormData);
+      setFile(null);
+      setFileName('');
+      setSelectedCountries([]);
+      setSelectedStates([]);
 
-    // Clear the file input using ref
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ''; // Clear the file input value
+      // Clear the file input using ref
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''; // Clear the file input value
+      }
     }
   };
 
@@ -113,13 +164,15 @@ function AdvertisementForm({selectedAdvertisement, setSelectedAdvertisement}: Pr
     <>
       <div className="pb-10">
         <p className="text-2xl">Advertisement panel</p>
-        <p className="text-sm text-textLight">Add or edit advertisements in the inventory</p>
+        <p className="text-sm text-textLight">
+          Add or edit advertisements in the inventory
+        </p>
       </div>
       <form
         onSubmit={handleSubmit}
         className="bg-white/45 flex max-w-[35rem] rounded-xl m-auto justify-center gap-y-4 flex-col p-5"
       >
-        <div className='flex flex-row gap-x-3'>
+        <div className="flex flex-row gap-x-3">
           <div className="flex flex-col">
             <div className="relative">
               <label>Advertisement Name</label>
@@ -131,6 +184,7 @@ function AdvertisementForm({selectedAdvertisement, setSelectedAdvertisement}: Pr
                 placeholder="Enter name"
                 onChange={handleInputChange}
                 value={formData.title}
+                disabled={isEditing}
               />
             </div>
           </div>
@@ -145,10 +199,12 @@ function AdvertisementForm({selectedAdvertisement, setSelectedAdvertisement}: Pr
                 placeholder="https://"
                 onChange={handleInputChange}
                 value={formData.url}
+                disabled={isEditing}
               />
             </div>
           </div>
         </div>
+
         <div className="flex flex-col w-full">
           <div className="relative">
             <label>Target Countries</label>
@@ -161,12 +217,11 @@ function AdvertisementForm({selectedAdvertisement, setSelectedAdvertisement}: Pr
               placeholder="Select Countries"
               maxSelectedLabels={5}
               display="chip"
-              itemClassName="bg-white"
-              panelStyle={{ backgroundColor: 'white', fontSize: 'small', padding: '5px', borderRadius: 5 }}
               className="rounded-lg mt-2 overflow-ellipsis border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent text-sm"
             />
           </div>
         </div>
+
         <div className="flex flex-col w-full">
           <div className="relative">
             <label>Target States</label>
@@ -176,7 +231,6 @@ function AdvertisementForm({selectedAdvertisement, setSelectedAdvertisement}: Pr
               options={stateOptions}
               optionLabel="label"
               filter
-              variant="filled"
               placeholder="Select States"
               maxSelectedLabels={5}
               display="chip"
@@ -184,6 +238,7 @@ function AdvertisementForm({selectedAdvertisement, setSelectedAdvertisement}: Pr
             />
           </div>
         </div>
+
         <div className="flex flex-col">
           <div className="relative">
             <label>Advertisement Thumbnail</label>
@@ -194,12 +249,14 @@ function AdvertisementForm({selectedAdvertisement, setSelectedAdvertisement}: Pr
               placeholder="Image"
               onChange={handleFileChange}
               ref={fileInputRef} // Attach ref to file input
+              disabled={isEditing}
             />
           </div>
           {fileName && (
             <div className="mt-2 text-gray-700">Selected file: {fileName}</div>
           )}
         </div>
+
         <div className="flex w-full">
           <button
             type="submit"
@@ -220,6 +277,6 @@ function AdvertisementForm({selectedAdvertisement, setSelectedAdvertisement}: Pr
       </form>
     </>
   );
-};
+}
 
 export default AdvertisementForm;

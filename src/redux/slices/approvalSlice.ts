@@ -15,13 +15,14 @@ const approvalSlice = createSlice({
   name: 'approval',
   initialState,
   reducers: {
-    getApprovalsAction: (state, action) => {
+    setApprovals: (state, action) => {
       state.allApproval = action.payload; // Update the state with the fetched data
     },
+    getApprovalsAction: () => {},
     updateApprovalsAction: () => {},
   },
 });
 
-export const { getApprovalsAction, updateApprovalsAction } = approvalSlice.actions;
+export const { getApprovalsAction, setApprovals, updateApprovalsAction } = approvalSlice.actions;
 
 export default approvalSlice.reducer;

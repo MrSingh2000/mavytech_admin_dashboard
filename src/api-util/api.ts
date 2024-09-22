@@ -5,11 +5,13 @@ const axiosInstance = axios.create();
 
 // Request interceptor
 axiosInstance.interceptors.request.use((config) => {
-  // const accessToken = getLocalStorageItem('authToken');
-  const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmUxZDA1MjQxNGZlNjViM2I3NWViMGIiLCJuYW1lIjoiZGVtbyBuYW1lIiwiZW1haWwiOiJkZW1vMUBnbWFpbC5jb20iLCJkb2IiOiIxMDAwMSA3Nzg4IiwicGhvbmUiOiIyMTMyMzIxMzIzMiIsImltYWdlVXJsIjoiIiwicm9sZSI6InVzZXIiLCJjcmVhdGVkQXQiOiIyMDI0LTA5LTExVDE3OjE2OjAyLjYwNVoiLCJ1cGRhdGVkQXQiOiIyMDI0LTA5LTExVDE3OjE2OjAyLjYwNVoiLCJfX3YiOjAsImlhdCI6MTcyNjE0OTM5MiwiZXhwIjoxNzI4NzQxMzkyfQ.1pkkISmfTRE1aY7Zjyzl2lO_ZwCDOYeOdM6fROrpQFU';
+  const accessToken = getLocalStorageItem('authToken');
+  // const accessToken =
+  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmVkZTZkNzk0OTRiZjdkN2U2ZGRiOWYiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImRvYiI6IjEwLTEwLTIwMDAiLCJwaG9uZSI6IjE5MjkyOTI5MjkiLCJpbWFnZVVybCI6IiIsInJvbGUiOiJhZG1pbiIsImNvdW50cnkiOiJJbmRpYSIsInN0YXRlIjoiSGFyeWFuYSIsImpvYkFwcGxpY2F0aW9ucyI6W10sImNyZWF0ZWRBdCI6IjIwMjQtMDktMjBUMjE6MTk6MTkuMjM0WiIsInVwZGF0ZWRBdCI6IjIwMjQtMDktMjBUMjE6MTk6MTkuMjM0WiIsIl9fdiI6MCwiaWF0IjoxNzI2OTA3MjQ5LCJleHAiOjE3Mjk0OTkyNDl9.zWtlS4UC66CycaA_SpLl029DExxjlUpJr8_RytrjH7g';
 
-  config.baseURL = 'http://192.168.1.33:5000';
-  
+  config.baseURL = import.meta.env.VITE_SERVER_PORT;
+
+
   const headers = {
     Authorization: `Bearer ${accessToken}`,
   };
@@ -35,6 +37,5 @@ axiosInstance.interceptors.response.use(
     return await Promise.reject(response);
   }
 );
-
 
 export default axiosInstance;

@@ -23,9 +23,68 @@ export type ApprovalType = {
   serviceManual: string;
   approved: boolean;
   createdAt: string;
+};
+
+export enum FlaggedModels {
+  SERVICES = 'Services',
+  SALES = 'Sales',
+  NEWS = 'News',
+}
+
+ export type ServicesType = {
+  _id: string;
+  title: string;
+  description: string;
+  imageUrl: string[];
+  postedBy: UserType;
+  equipmentName: string;
+  equipmentModel: string;
+  state: string;
+  country: string;
+  createdAt: string;
+};
+
+ export type SalesType = ServicesType & {
+  location: string;
+  price: string;
+};
+export type NewsType = {
+  title: string;
+  description: string;
+  imageUrl: string;
+  likes: string[];
+  postedBy: UserType;
+  tags: string[];
+  _id: string;
+  createdAt: string;
+};
+
+
+export type FlaggedType = {
+  _id: string;
+  postId: string;
+  postModel: FlaggedModels;
+  reportedBy: UserType;
+  category: string;
+  createdAt: string;
+  updatedAt: string;
+  postDetails: ServicesType | NewsType | SalesType;
 
 };
 
+
+export type UserType = {
+  _id: string;
+  name: string;
+  email: string;
+  dob: string;
+  phone: string;
+  imageUrl: string;
+  role: string;
+  state: string;
+  country: string;
+  createdAt: string;
+};
 
 export type AdvertisementType = {
   _id: string;
@@ -34,7 +93,7 @@ export type AdvertisementType = {
   thumbnail: string;
   targetCity: string[];
   targetCountry: string[];
-  active: string;
+  active: boolean;
 };
 
 export type DocumentType = {
@@ -42,3 +101,11 @@ export type DocumentType = {
   title: string;
   url: string;
 };
+
+export type AuthType ={
+  authToken: string;
+}
+
+
+
+

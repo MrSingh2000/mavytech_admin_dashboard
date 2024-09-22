@@ -34,7 +34,7 @@ function* saveDocument(action: any): any {
 
     const response = yield call(
       axiosInstance.post,
-      createUrl(endpoints.document.create),
+      endpoints.document.create,
       action.payload
     );
 

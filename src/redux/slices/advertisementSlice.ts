@@ -15,9 +15,10 @@ const advertisementSlice = createSlice({
   name: 'advertisement',
   initialState,
   reducers: {
-    updateAdvertisements: (state, action: PayloadAction<AdvertisementType[]>) => {
+    setAdvertisements: (state, action) => {
       state.allAdvertisement = action.payload;
     },
+    updateAdvertisementAction:() => {},
     getAdvertisementsAction: () => {},
     createAdvertisementAction: () => {},
     deleteAdvertisementAction: () => {},
@@ -26,9 +27,10 @@ const advertisementSlice = createSlice({
 
 export const {
   getAdvertisementsAction,
-  updateAdvertisements,
+  updateAdvertisementAction,
   createAdvertisementAction,
   deleteAdvertisementAction,
+  setAdvertisements,
 } = advertisementSlice.actions;
 
 export default advertisementSlice.reducer;

@@ -16,7 +16,7 @@ const  advertisement= {
   create: '/advertisement/create',
   fetchAll: '/advertisement/all',
   delete: '/advertisement/remove',
-  update: '/advertisement'
+  update: '/advertisement/update'
 };
 
 const approval= {
@@ -24,11 +24,28 @@ const approval= {
   update: '/equipment/approvals'
 };
 
+const users= {
+  fetchAll: '/useraccount',
+  update: '/useraccount',
+};
+
+const flagged= {
+  fetchAll: '/flagged',
+  reject: '/flagged',
+  accept: '/flagged'
+}
+const auth= {
+  login: '/auth/admin-login'
+}
+
 const endpoints = {
   equipment,
   document,
   advertisement,
-  approval
+  approval,
+  users,
+  flagged,
+  auth
 
 };
 
