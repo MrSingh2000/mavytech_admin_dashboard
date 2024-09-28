@@ -1,16 +1,11 @@
-import DocumentGrid from "../components/documents/DocList";
-import DocUploadForm from "../components/documents/DocUploadForm";
-import { useEffect, useState } from 'react';
-import { DocumentType } from '../types';
+import DocumentGrid from '../components/documents/DocList';
+import DocUploadForm from '../components/documents/DocUploadForm';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getDocumentsAction } from '../redux/slices/documentSlice';
 
-
 function Documents() {
   const dispatch = useDispatch();
-
-  const [selectedDocument, setSelectedDocument] =
-    useState<DocumentType | null>(null);
 
   useEffect(() => {
     dispatch({ type: getDocumentsAction.type });
@@ -18,8 +13,8 @@ function Documents() {
 
   return (
     <>
-      <DocUploadForm/>
-      <DocumentGrid setSelectedDocument={setSelectedDocument} />
+      <DocUploadForm />
+      <DocumentGrid />
     </>
   );
 }

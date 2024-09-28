@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   FlaggedModels,
   FlaggedType,
@@ -8,11 +8,9 @@ import {
 } from '../types';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/saga-green/theme.css';
-import { BsFillPostcardFill, BsPostcard } from 'react-icons/bs';
+import {  BsPostcard } from 'react-icons/bs';
 import { Dialog } from 'primereact/dialog';
 import { Galleria } from 'primereact/galleria';
-import { FaPencilAlt } from 'react-icons/fa';
-import { MdDeleteForever } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { acceptFlaggedAction, getFlagsAction, rejectFlaggedAction } from '../redux/slices/flaggedSlice';
@@ -23,7 +21,6 @@ import { CgFileRemove } from 'react-icons/cg';
 function Flagged() {
   const dispatch = useDispatch();
   const [category, setCategory] = useState<string>('Services');
-  const [selectedFlag, setSelectedFlag] = useState<FlaggedType | null>(null);
   const flaggeditems = useSelector((state: RootState) => state.flagged);
   console.log(flaggeditems);
 

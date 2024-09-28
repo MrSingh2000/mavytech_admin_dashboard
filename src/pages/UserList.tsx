@@ -1,6 +1,6 @@
 import { Avatar } from 'primereact/avatar';
 import { Dialog } from 'primereact/dialog';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { Dropdown } from 'primereact/dropdown';
 import { RootState } from '../redux/store';
@@ -94,7 +94,6 @@ function UserList() {
   );
 }
 
-
 function formatDate(isoString) {
   const date = new Date(isoString);
 
@@ -122,15 +121,6 @@ const UserDetails = ({ data }: ItemProps) => {
   >([]);
 
   const dispatch = useDispatch();
-  const initialData = {
-    state: selectedState,
-    country: selectedCountry,
-  };
-  const [formData, setFormData] = useState<{
-    country: string;
-    state: string;
-  }>(initialData);
-
   useEffect(() => {
     const countryOptions = Object.keys(countriesData).map((country) => ({
       label: country,
@@ -152,21 +142,19 @@ const UserDetails = ({ data }: ItemProps) => {
     }
   }, [selectedCountry]);
 
-
   const handleSave = async () => {
     const updatedData = {
       country: selectedCountry,
       state: selectedState,
     };
-  
+
     dispatch({
       type: updateUserAction.type,
       payload: { data: updatedData, id: data._id },
     });
-  
+
     setVisible(false);
   };
-  
 
   return (
     <tr className="w-full">

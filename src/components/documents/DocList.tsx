@@ -1,4 +1,3 @@
-import React from 'react';
 import pdflogo from '/src/assets/icons8-pdf-100.png';
 import { createUrl } from '../../helper/functions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,13 +8,8 @@ import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/saga-green/theme.css';
 import { Tooltip } from 'primereact/tooltip';
 
-type Props = {
-  setSelectedDocument: React.Dispatch<
-    React.SetStateAction<DocumentType | null>
-  >;
-};
 
-function DocumentGrid(props: Props) {
+function DocumentGrid() {
   const documents = useSelector(
     (store: RootState) => store.document.allDocument
   );
@@ -32,13 +26,13 @@ function DocumentGrid(props: Props) {
     >
       {documents &&
         documents.map((item) => (
-          <DocCard data={item} key={item._id} {...props} />
+          <DocCard data={item} key={item._id}/>
         ))}
     </div>
   );
 }
 
-type ItemProps = Props & {
+type ItemProps = {
   data: DocumentType;
 };
 

@@ -4,7 +4,7 @@ import Bg from '/src/assets/LoginBg.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLoginAction } from '../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { RootState, store } from '../redux/store';
+import { RootState } from '../redux/store';
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     event.preventDefault();
     dispatch({ type: userLoginAction.type, payload: { email, password } });
   };
-  
+
   useEffect(() => {
     if (authToken) {
       navigate('/');

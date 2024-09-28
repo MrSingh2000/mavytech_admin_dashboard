@@ -1,6 +1,6 @@
 import { FaPencilAlt } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
-import React, { useState, PropsWithChildren } from 'react';
+import React, { useState} from 'react';
 import { Image } from 'primereact/image';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/saga-green/theme.css';
