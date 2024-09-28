@@ -12,6 +12,7 @@ import Flagged from './pages/Flagged';
 import UserList from './pages/UserList';
 import Login from './pages/LogIn';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
+import Notfound from './pages/Notfound';
 
 function App() {
   return (
@@ -45,8 +46,8 @@ function App() {
           <Route path="approval" Component={Approval} />
           <Route path="flagged" Component={Flagged} />
           <Route path="allusers" Component={UserList} />
-          <Route path="*" Component={UserList} />
         </Route>
+        <Route path="*" Component={Notfound} />
       </Routes>
     </>
   );
