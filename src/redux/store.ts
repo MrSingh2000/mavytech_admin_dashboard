@@ -23,7 +23,7 @@ export const store = configureStore({
     approval: approvalSlice,
     users: usersSlice,
     flagged: flaggedSlice,
-    auth: authSlice,
+    user: authSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

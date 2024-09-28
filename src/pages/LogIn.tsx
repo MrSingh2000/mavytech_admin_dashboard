@@ -6,26 +6,25 @@ import { userLoginAction } from '../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { RootState, store } from '../redux/store';
 
-const AuthForm: React.FC = () => {
+const Login: React.FC = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const authToken = useSelector((store: RootState) => store.auth.authToken );
+  const authToken = useSelector((store: RootState) => store.user.authToken);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch({type: userLoginAction.type, payload: {email, password}});
-
-    
+    dispatch({ type: userLoginAction.type, payload: { email, password } });
   };
+  
   useEffect(() => {
     if (authToken) {
       navigate('/');
     }
-  }, [authToken, navigate]
-  );
+  }, [authToken]);
+
   return (
     <div
       style={{
@@ -94,4 +93,4 @@ const AuthForm: React.FC = () => {
   );
 };
 
-export default AuthForm;
+export default Login;

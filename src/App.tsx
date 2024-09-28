@@ -10,7 +10,8 @@ import Documents from './pages/Documents';
 import Approval from './pages/Approval';
 import Flagged from './pages/Flagged';
 import UserList from './pages/UserList';
-import AuthForm from './pages/LogIn';
+import Login from './pages/LogIn';
+import AuthenticatedRoute from './components/AuthenticatedRoute';
 
 function App() {
   return (
@@ -28,8 +29,15 @@ function App() {
         theme="light"
       />
       <Routes>
-        <Route path="/login" Component={AuthForm}/>
-        <Route path="/" Component={Layout}>
+        <Route path="/login" Component={Login} />
+        <Route
+          path="/"
+          Component={() => (
+            <AuthenticatedRoute>
+              <Layout />
+            </AuthenticatedRoute>
+          )}
+        >
           <Route path="" Component={Home} />
           <Route path="equipment" Component={Equipment} />
           <Route path="advertisement" Component={Advertisement} />
@@ -37,6 +45,7 @@ function App() {
           <Route path="approval" Component={Approval} />
           <Route path="flagged" Component={Flagged} />
           <Route path="allusers" Component={UserList} />
+          <Route path="*" Component={UserList} />
         </Route>
       </Routes>
     </>
