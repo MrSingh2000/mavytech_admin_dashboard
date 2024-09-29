@@ -29,7 +29,6 @@ const Login: React.FC = () => {
     <div
       style={{
         backgroundImage: `url(${Bg})`,
-        backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
       }}
     >
