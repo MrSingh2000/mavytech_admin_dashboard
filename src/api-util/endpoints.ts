@@ -27,7 +27,6 @@ const approval= {
 const users= {
   fetchAll: '/useraccount',
   update: '/useraccount',
-  search: '/useraccount/search'
 };
 
 const flagged= {

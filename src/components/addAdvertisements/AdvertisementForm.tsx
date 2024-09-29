@@ -18,7 +18,6 @@ type Props = {
 
 function AdvertisementForm({
   selectedAdvertisement,
-  setSelectedAdvertisement,
 }: Props) {
   const dispatch = useDispatch();
   const initialFormData = {

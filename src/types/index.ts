@@ -31,7 +31,7 @@ export enum FlaggedModels {
   NEWS = 'News',
 }
 
- export type ServicesType = {
+export type ServicesType = {
   _id: string;
   title: string;
   description: string;
@@ -44,7 +44,7 @@ export enum FlaggedModels {
   createdAt: string;
 };
 
- export type SalesType = ServicesType & {
+export type SalesType = ServicesType & {
   location: string;
   price: string;
 };
@@ -59,7 +59,6 @@ export type NewsType = {
   createdAt: string;
 };
 
-
 export type FlaggedType = {
   _id: string;
   postId: string;
@@ -69,9 +68,7 @@ export type FlaggedType = {
   createdAt: string;
   updatedAt: string;
   postDetails: ServicesType | NewsType | SalesType;
-
 };
-
 
 export type UserType = {
   _id: string;
@@ -102,10 +99,20 @@ export type DocumentType = {
   url: string;
 };
 
-export type AuthType ={
+export type AuthType = {
   authToken: string;
-}
+};
 
-
-
-
+export type UserObjType = {
+  _id: string;
+  name: string;
+  email: string;
+  dob?: string;
+  phone?: string;
+  imageUrl: string;
+  role: string;
+  state: string;
+  country: string;
+  createdAt: string;
+  updatedAt: string;
+};

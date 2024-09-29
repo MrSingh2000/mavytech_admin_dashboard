@@ -1,18 +1,14 @@
 import { Avatar } from 'primereact/avatar';
 import { Dialog } from 'primereact/dialog';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { Dropdown } from 'primereact/dropdown';
 import { RootState } from '../redux/store';
 import countriesData from '../components/addAdvertisements/countries.json';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsersAction, searchUserAction, updateUserAction } from '../redux/slices/usersSlice';
+import { getUsersAction, updateUserAction } from '../redux/slices/usersSlice';
 import { createUrl } from '../helper/functions';
 import { UserType } from '../types';
-import { InputText } from 'primereact/inputtext';
-import { FloatLabel } from 'primereact/floatlabel';
-import { FiFilter } from 'react-icons/fi';
-import { FaFilter } from 'react-icons/fa6';
 
 function UserList() {
   const dispatch = useDispatch();
@@ -23,11 +19,7 @@ function UserList() {
   }, [dispatch]);
 
   return (
-    <div className="px-4 pt-2 pb-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
-      <div className="my-2">
-        <UserSearch />
-      </div>
-
+    <div className="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
       <div
         className="inline-block min-w-full overflow-hidden rounded-lg shadow"
         style={{
@@ -129,15 +121,6 @@ const UserDetails = ({ data }: ItemProps) => {
   >([]);
 
   const dispatch = useDispatch();
-  const initialData = {
-    state: selectedState,
-    country: selectedCountry,
-  };
-  const [formData, setFormData] = useState<{
-    country: string;
-    state: string;
-  }>(initialData);
-
   useEffect(() => {
     const countryOptions = Object.keys(countriesData).map((country) => ({
       label: country,
@@ -284,91 +267,5 @@ const UserDetails = ({ data }: ItemProps) => {
     </tr>
   );
 };
-
-const UserSearch = () => {
-  const [selectedState, setSelectedState] = useState<string>('');
-  const [countryOptions, setCountryOptions] = useState<
-    { label: string; value: string }[]
-  >([]);
-
-  const [selectedCountry, setSelectedCountry] = useState<string>(''); // Single country selection
-  const [stateOptions, setStateOptions] = useState<
-    { label: string; value: string }[]
-  >([]);
-  const dispatch = useDispatch();
-  // Assuming countriesData is a global or imported variable holding country and state information
-  useEffect(() => {
-    const countryOptions = Object.keys(countriesData).map((country) => ({
-      label: country,
-      value: country,
-    }));
-    setCountryOptions(countryOptions);
-  }, []);
-  const [username, setUsername] = useState<string>('');
-  useEffect(() => {
-    if (selectedCountry) {
-      const states = countriesData[selectedCountry] || [];
-      const stateOptions = states.map((state) => ({
-        label: state,
-        value: state,
-      }));
-      
-      setStateOptions(stateOptions);
-    } else {
-      setStateOptions([]); // Clear state options when no country is selected
-    }
-  }, [selectedCountry]);
-
-  const handleSubmit = async (e: React.FormEvent)=>{
-    e.preventDefault();
-
-    dispatch({
-      type: searchUserAction.type,
-      payload :{name: username, country: selectedCountry, state: selectedState},
-    });
-  }
-
-  
-
-  return (
-    <div className='flex justify-center'>
-    <div className=' flex flex-row gap-3 items-center w-auto'>
-      <FloatLabel>
-        <InputText value={username} onChange={(e) => setUsername(e.target.value)} id="username" className=" rounded-lg h-12 py-2 px-4 w-44" />
-        <label htmlFor="username">Username</label>
-      </FloatLabel>
-      <Dropdown
-        value={selectedCountry} // Corrected value from selectedCount to selectedCountry
-        onChange={(e) => setSelectedCountry(e.value)} // Correct setSelectedCountry
-        options={countryOptions}
-        optionLabel="value"
-        className="rounded-lg h-12 w-44 overflow-ellipsis border-transparent appearance-none border border-gray-300  py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent text-sm"
-        placeholder="Country"
-      />
-
-      <Dropdown
-        value={selectedState} // Set this correctly
-        onChange={(e) => setSelectedState(e.value)} // Correct setSelectedState
-        options={stateOptions} // Corrected from staeOptions to stateOptions
-        optionLabel="value"
-        className="rounded-lg h-12 w-44 overflow-ellipsis border-transparent appearance-none border border-gray-300 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent text-sm"
-        placeholder="State" // Updated placeholder
-      />
-      <div className='h-full w-44 flex justify-center items-center align-middle'>
-      <button
-      onClick={handleSubmit}
-                className="h-12 py-2 w-44  px-4 flex justify-center gap-5  items-center bg-green-600 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-red-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-              >
-                
-                <FaFilter/>
-                <p>Filter</p>
-              </button>
-      </div>
-      
-    </div>
-    </div>
-  );
-};
-
 
 export default UserList;

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { UserType } from '../../types';
 
 type StateType = {
@@ -21,14 +21,12 @@ const usersSlice = createSlice({
 
     getUsersAction: () => {},
     updateUserAction: () => {},
-    searchUserAction: () => {},
   },
 });
 
 export const {
   getUsersAction,
   updateUserAction,
-  searchUserAction,
   setUsers,
 } = usersSlice.actions;
 

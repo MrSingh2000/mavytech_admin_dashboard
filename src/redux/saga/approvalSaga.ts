@@ -9,7 +9,7 @@ import axiosInstance from '../../api-util/api';
 import endpoints from '../../api-util/endpoints';
 import { createUrl } from '../../helper/functions';
 
-function* getApprovals(action: any): any {
+function* getApprovals(): any {
   try {
     yield put(setLoading(true));
 

@@ -1,23 +1,30 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosHeaders } from 'axios';
 import { getLocalStorageItem, showToast } from '../helper/functions';
+import endpoints from './endpoints';
 
 const axiosInstance = axios.create();
 
 // Request interceptor
-axiosInstance.interceptors.request.use((config) => {
-  // const accessToken = getLocalStorageItem('authToken');
-   const accessToken =
- 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmVkZTZkNzk0OTRiZjdkN2U2ZGRiOWYiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImRvYiI6IjEwLTEwLTIwMDAiLCJwaG9uZSI6IjE5MjkyOTI5MjkiLCJpbWFnZVVybCI6IiIsInJvbGUiOiJhZG1pbiIsImNvdW50cnkiOiJJbmRpYSIsInN0YXRlIjoiSGFyeWFuYSIsImpvYkFwcGxpY2F0aW9ucyI6W10sImNyZWF0ZWRBdCI6IjIwMjQtMDktMjBUMjE6MTk6MTkuMjM0WiIsInVwZGF0ZWRBdCI6IjIwMjQtMDktMjBUMjE6MTk6MTkuMjM0WiIsIl9fdiI6MCwiaWF0IjoxNzI2OTA3MjQ5LCJleHAiOjE3Mjk0OTkyNDl9.zWtlS4UC66CycaA_SpLl029DExxjlUpJr8_RytrjH7g';
+axiosInstance.interceptors.request.use((config: any) => {
+  const localUser = getLocalStorageItem('user');
+  const accessToken = localUser ? JSON.parse(localUser).token : null;
 
   config.baseURL = import.meta.env.VITE_SERVER_PORT;
 
+  console.log(import.meta.env.VITE_SERVER_PORT);
 
-  const headers = {
-    Authorization: `Bearer ${accessToken}`,
-  };
+  const excludedEndpoints = [endpoints.auth.login];
 
-  // @ts-expect-error no use of type check here
-  config.headers = headers;
+  if (!excludedEndpoints.includes(config.url || '')) {
+    // Add Authorization header if the endpoint is not excluded
+    if (accessToken) {
+      config.headers = {
+        ...(config.headers as AxiosHeaders),
+        Authorization: `Bearer ${accessToken}`,
+        'Cache-Control': 'no-cache',
+      };
+    }
+  }
 
   return config;
 });
@@ -25,16 +32,27 @@ axiosInstance.interceptors.request.use((config) => {
 // Response interceptor
 axiosInstance.interceptors.response.use(
   (response) => {
-    if (response.data?.message) {
+    if (response?.data?.message) {
       showToast(response.data.message, 'success');
     }
     return response;
   },
   async (error) => {
-    const { response } = error as AxiosError;
+    const axiosError = error as AxiosError;
 
-    showToast((response as any).message, 'error');
-    return await Promise.reject(response);
+    if (axiosError.response) {
+      // Error response from the server
+      const errorMessage =
+        (axiosError.response.data as any)?.message || 'An error occurred';
+      showToast(errorMessage, 'error');
+    } else if (axiosError.request) {
+      // No response received from the server
+      showToast('No response from the server', 'error');
+    } else {
+      // Error in setting up the request
+      showToast(axiosError.message || 'Request setup error', 'error');
+    }
+    return await Promise.reject(axiosError.response);
   }
 );
 

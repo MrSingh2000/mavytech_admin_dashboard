@@ -1,6 +1,5 @@
 import AdvertisementForm from "../components/addAdvertisements/AdvertisementForm";
 import AdvertisementList from "../components/addAdvertisements/AdvertisementList";
-import React from 'react';
 import { useEffect, useState } from 'react';
 import { AdvertisementType } from '../types';
 import { useDispatch } from 'react-redux';

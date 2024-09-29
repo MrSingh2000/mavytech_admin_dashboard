@@ -10,7 +10,7 @@ import { setLoading } from '../slices/loadingSlice';
 import axiosInstance from '../../api-util/api';
 import endpoints from '../../api-util/endpoints';
 
-function* getAdvertisements(action: any): any {
+function* getAdvertisements(): any {
   try {
     yield put(setLoading(true));
 

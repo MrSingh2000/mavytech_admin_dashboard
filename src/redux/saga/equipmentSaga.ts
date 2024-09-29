@@ -7,10 +7,9 @@ import {
 } from '../slices/equipmentSlice';
 import { setLoading } from '../slices/loadingSlice';
 import axiosInstance from '../../api-util/api';
-import { createUrl } from '../../helper/functions';
 import endpoints from '../../api-util/endpoints';
 
-function* getEquipments(action: any): any {
+function* getEquipments(): any {
   try {
     yield put(setLoading(true));
 
