@@ -30,8 +30,7 @@ const AuthForm: React.FC = () => {
     <div
       style={{
         backgroundImage: `url(${Bg})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
+        backgroundSize: 'cover'
       }}
     >
       <div className="flex bg-white bg-opacity-50">

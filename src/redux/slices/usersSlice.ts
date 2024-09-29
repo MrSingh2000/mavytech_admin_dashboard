@@ -21,12 +21,14 @@ const usersSlice = createSlice({
 
     getUsersAction: () => {},
     updateUserAction: () => {},
+    searchUserAction: () => {},
   },
 });
 
 export const {
   getUsersAction,
   updateUserAction,
+  searchUserAction,
   setUsers,
 } = usersSlice.actions;
 

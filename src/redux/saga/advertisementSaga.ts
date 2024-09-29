@@ -8,7 +8,6 @@ import {
 } from '../slices/advertisementSlice';
 import { setLoading } from '../slices/loadingSlice';
 import axiosInstance from '../../api-util/api';
-import { createUrl } from '../../helper/functions';
 import endpoints from '../../api-util/endpoints';
 
 function* getAdvertisements(action: any): any {

@@ -2,7 +2,8 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   getUsersAction,
   updateUserAction,
-  setUsers
+  setUsers,
+  searchUserAction
 } from '../slices/usersSlice';
 import { setLoading } from '../slices/loadingSlice';
 import axiosInstance from '../../api-util/api';
@@ -43,6 +44,23 @@ function* updateUser(action: any): any {
   }
 }
 
+function* searchUser(action: any): any {
+  try {
+    yield put(setLoading(true));
+
+    yield call(
+      axiosInstance.patch,`${endpoints.users.search}?name=${action.payload.name}&country=${action.payload.country}&state=${action.payload.state}`,
+      action.payload.data
+    );
+
+    yield put({type: getUsersAction.type})
+
+    yield put(setLoading(false));
+  } catch (error) {
+    yield put(setLoading(false));
+  }
+}
+
 
 export function* watchGetUsersSaga() {
   yield takeEvery(getUsersAction.type, getUsers);
@@ -50,4 +68,8 @@ export function* watchGetUsersSaga() {
 
 export function* watchUpdateUserSaga() {
   yield takeEvery(updateUserAction.type, updateUser);
+}
+
+export function* watchSearchUserSaga() {
+  yield takeEvery(searchUserAction.type, searchUser);
 }
