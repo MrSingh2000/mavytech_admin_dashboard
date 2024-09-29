@@ -110,7 +110,7 @@ export type UserObjType = {
   dob?: string;
   phone?: string;
   imageUrl: string;
-  role: ROLES;
+  role: string;
   state: string;
   country: string;
   createdAt: string;

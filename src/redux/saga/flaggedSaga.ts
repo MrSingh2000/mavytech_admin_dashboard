@@ -14,7 +14,8 @@ import endpoints from '../../api-util/endpoints';
 import { withLoadingAndErrorHandling } from '../../utils/saga-utils';
 import { FlaggedModels, FlaggedType } from '../../types';
 
-function* getAllFlags(action: any): any {
+// eslint-disable-next-line
+function* getAllFlags(): any {
   yield* withLoadingAndErrorHandling(function* (): any {
       const response = yield call(axiosInstance.get, endpoints.flagged.fetchAll);
       const data: FlaggedType[] = response.data.value;

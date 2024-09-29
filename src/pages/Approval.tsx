@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import noImage from '../assets/noImage.png';
 import pdflogo from '../assets/icons8-pdf-100.png';
 import { TiTick } from 'react-icons/ti';

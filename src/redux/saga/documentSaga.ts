@@ -10,7 +10,8 @@ import axiosInstance from '../../api-util/api';
 import { createUrl } from '../../helper/functions';
 import endpoints from '../../api-util/endpoints';
 
-function* getDocuments(action: any): any {
+// eslint-disable-next-line
+function* getDocuments(): any {
   try {
     yield put(setLoading(true));
 

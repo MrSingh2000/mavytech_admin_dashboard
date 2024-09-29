@@ -8,7 +8,7 @@ import { setLoading } from '../slices/loadingSlice';
 import axiosInstance from '../../api-util/api';
 import endpoints from '../../api-util/endpoints';
 
-function* getUsers(action: any): any {
+function* getUsers(): any {
   try {
     yield put(setLoading(true));
 

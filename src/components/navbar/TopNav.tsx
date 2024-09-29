@@ -1,4 +1,3 @@
-import React from 'react';
 import { RiNotification4Line } from 'react-icons/ri';
 import { BiMessage } from 'react-icons/bi';
 import { RiSettings3Line } from 'react-icons/ri';
