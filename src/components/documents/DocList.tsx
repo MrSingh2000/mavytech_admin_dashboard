@@ -7,7 +7,7 @@ import { deleteDocumentAction } from '../../redux/slices/documentSlice';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/saga-green/theme.css';
 import { Tooltip } from 'primereact/tooltip';
-
+import NoData from '../common/NoData';
 
 function DocumentGrid() {
   const documents = useSelector(
@@ -25,9 +25,12 @@ function DocumentGrid() {
       className=" mt-10 border-t-2 border-gray-300 grid grid-cols-5 gap-4 justify-center py-6"
     >
       {documents &&
-        documents.map((item) => (
-          <DocCard data={item} key={item._id}/>
-        ))}
+        documents.map((item) => <DocCard data={item} key={item._id} />)}
+      {documents && documents.length === 0 && (
+        <div className='col-span-5'>
+          <NoData text="No documents uploaded" />
+        </div>
+      )}
     </div>
   );
 }
