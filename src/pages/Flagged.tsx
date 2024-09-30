@@ -8,16 +8,21 @@ import {
 } from '../types';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/saga-green/theme.css';
-import {  BsPostcard } from 'react-icons/bs';
+import { BsPostcard } from 'react-icons/bs';
 import { Dialog } from 'primereact/dialog';
 import { Galleria } from 'primereact/galleria';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { acceptFlaggedAction, getFlagsAction, rejectFlaggedAction } from '../redux/slices/flaggedSlice';
-import {Tag} from 'primereact/tag' 
+import {
+  acceptFlaggedAction,
+  getFlagsAction,
+  rejectFlaggedAction,
+} from '../redux/slices/flaggedSlice';
+import { Tag } from 'primereact/tag';
 import { createUrl } from '../helper/functions';
-import { RiArrowGoBackLine } from "react-icons/ri";
+import { RiArrowGoBackLine } from 'react-icons/ri';
 import { CgFileRemove } from 'react-icons/cg';
+import NoData from '../components/common/NoData';
 function Flagged() {
   const dispatch = useDispatch();
   const [category, setCategory] = useState<string>('Services');
@@ -36,14 +41,23 @@ function Flagged() {
           <li className="w-full focus-within:z-10">
             <button
               onClick={() => setCategory('Services')}
-              className={`inline-block w-full p-4  border-s-0 border-gray-200 rounded-s-lg focus:ring-4 hover:bg-gray-50  focus:ring-green-500 focus:outline-none focus:bg-success20percent focus:text-success focus:font-bold ${category === 'Services'? 'bg-success20percent text-success font-bold':'bg-white'}`}            >
+              className={`inline-block w-full p-4  border-s-0 border-gray-200 rounded-s-lg focus:ring-4 hover:bg-gray-50  focus:ring-green-500 focus:outline-none focus:bg-success20percent focus:text-success focus:font-bold ${
+                category === 'Services'
+                  ? 'bg-success20percent text-success font-bold'
+                  : 'bg-white'
+              }`}
+            >
               Services
             </button>
           </li>
           <li className="w-full focus-within:z-10">
             <button
               onClick={() => setCategory('Sales')}
-              className={`inline-block w-full p-4  border-r border-gray-200 dark:border-gray-700 hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-green-500 focus:outline-none focus:bg-success20percent focus:text-success focus:font-bold ${category === 'Sales'? 'bg-success20percent text-success font-bold':'bg-white'}`}
+              className={`inline-block w-full p-4  border-r border-gray-200 dark:border-gray-700 hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-green-500 focus:outline-none focus:bg-success20percent focus:text-success focus:font-bold ${
+                category === 'Sales'
+                  ? 'bg-success20percent text-success font-bold'
+                  : 'bg-white'
+              }`}
             >
               Sales
             </button>
@@ -52,7 +66,11 @@ function Flagged() {
           <li className="w-full focus-within:z-10">
             <button
               onClick={() => setCategory('News')}
-              className={`inline-block w-full p-4  border-e-0 border-gray-200 rounded-e-lg hover:bg-gray-50 focus:ring-4 focus:ring-green-500 focus:outline-none focus:bg-success20percent focus:text-success focus:font-bold ${category === 'News'? 'bg-success20percent text-success font-bold':'bg-white'}`} 
+              className={`inline-block w-full p-4  border-e-0 border-gray-200 rounded-e-lg hover:bg-gray-50 focus:ring-4 focus:ring-green-500 focus:outline-none focus:bg-success20percent focus:text-success focus:font-bold ${
+                category === 'News'
+                  ? 'bg-success20percent text-success font-bold'
+                  : 'bg-white'
+              }`}
             >
               News
             </button>
@@ -126,6 +144,13 @@ function Flagged() {
                     ))}
               </tbody>
             </table>
+            {category === 'Services' && flaggeditems.services.length == 0 ? (
+              <NoData text="No advertisements flags available" />
+            ) : category === 'Sales' && flaggeditems.sales.length == 0 ? (
+              <NoData text="No sales flags available" />
+            ) : category === 'News' && flaggeditems.news.length == 0 ? (
+              <NoData text="No news flags available" />
+            ) : null}
           </div>
         </div>
       </div>
@@ -181,11 +206,11 @@ const ListRow = ({ data }: ItemProps) => {
       </td>
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
         <p className="text-gray-900 whitespace-no-wrap text-center">
-        {data.postModel === FlaggedModels.SERVICES
-                  ?(data.postDetails as ServicesType).postedBy.name
-                  : data.postModel === FlaggedModels.SALES
-                  ? (data.postDetails as SalesType).postedBy.name
-                  : (data.postDetails as NewsType).postedBy.name}
+          {data.postModel === FlaggedModels.SERVICES
+            ? (data.postDetails as ServicesType).postedBy.name
+            : data.postModel === FlaggedModels.SALES
+            ? (data.postDetails as SalesType).postedBy.name
+            : (data.postDetails as NewsType).postedBy.name}
         </p>
       </td>
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
@@ -201,19 +226,23 @@ const ListRow = ({ data }: ItemProps) => {
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200 justify-center align-middle items-center">
         <div className="flex justify-center gap-2">
           <button
-          onClick={()=> dispatch({ type: rejectFlaggedAction.type, payload: data._id })}
+            onClick={() =>
+              dispatch({ type: rejectFlaggedAction.type, payload: data._id })
+            }
             type="button"
             className="flex justify-center items-center  bg-green-600 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-green-200 text-white transition ease-in  duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 w-8 h-8 rounded-lg "
           >
-            <RiArrowGoBackLine color='white' />
+            <RiArrowGoBackLine color="white" />
           </button>
 
           <button
-          onClick={()=> dispatch({ type: acceptFlaggedAction.type, payload: data._id })}
+            onClick={() =>
+              dispatch({ type: acceptFlaggedAction.type, payload: data._id })
+            }
             type="button"
             className="flex justify-center items-center  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white  transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 w-8 h-8 rounded-lg "
           >
-            <CgFileRemove color='white' />
+            <CgFileRemove color="white" />
           </button>
         </div>
       </td>
@@ -232,7 +261,9 @@ const ListRow = ({ data }: ItemProps) => {
         {data.postModel === FlaggedModels.SERVICES ? (
           <div className="flex flex-col justify-center align-middle items-center rounded-full">
             <Galleria
-              value={(data.postDetails as ServicesType).imageUrl.map((url)=> createUrl(url))}
+              value={(data.postDetails as ServicesType).imageUrl.map((url) =>
+                createUrl(url)
+              )}
               item={itemTemplate}
               showThumbnails={false}
               style={{
@@ -246,29 +277,43 @@ const ListRow = ({ data }: ItemProps) => {
               transitionInterval={2000}
             />
 
-            <p className="font-bold text-black text-base text-left w-full my-2"> 
+            <p className="font-bold text-black text-base text-left w-full my-2">
               {data.postDetails.title}
             </p>
-            <p className="text-black text-xs text-left  w-full"> <i className='font-semibold'> Equipment Name:{' '}</i>
-            <p className='text-gray-700 text-sm  m-0'>  {(data.postDetails as ServicesType).equipmentName}</p>
+            <p className="text-black text-xs text-left  w-full">
+              {' '}
+              <i className="font-semibold"> Equipment Name: </i>
+              <p className="text-gray-700 text-sm  m-0">
+                {' '}
+                {(data.postDetails as ServicesType).equipmentName}
+              </p>
             </p>
             <p className="text-black text-xs text-left w-full">
               Equipement Model:{' '}
-             <i className='text-gray-700'> {(data.postDetails as SalesType).equipmentModel}</i>
-             
+              <i className="text-gray-700">
+                {' '}
+                {(data.postDetails as SalesType).equipmentModel}
+              </i>
             </p>
-            <p className='text-xs font-semibold mt-2 w-full text-left'><i>Description</i></p>
+            <p className="text-xs font-semibold mt-2 w-full text-left">
+              <i>Description</i>
+            </p>
             <hr className="font-extrabold mb-2 w-full" />
-            <p className='text-left w-full text-sm mb-2'>{data.postDetails.description}</p>
+            <p className="text-left w-full text-sm mb-2">
+              {data.postDetails.description}
+            </p>
             <hr className="font-extrabold m-2 w-full" />
-            <div className="flex flex-row justify-between text-xs  w-full"><p className='font-semibold'>Created on:</p>
+            <div className="flex flex-row justify-between text-xs  w-full">
+              <p className="font-semibold">Created on:</p>
               <p>{formatDate((data.postDetails as ServicesType).createdAt)}</p>
             </div>
           </div>
         ) : data.postModel === FlaggedModels.SALES ? (
           <div className="flex flex-col justify-center align-middle items-center rounded-full">
             <Galleria
-              value={(data.postDetails as SalesType).imageUrl.map((url)=> createUrl(url))}
+              value={(data.postDetails as SalesType).imageUrl.map((url) =>
+                createUrl(url)
+              )}
               item={itemTemplate}
               showThumbnails={false}
               style={{
@@ -282,19 +327,26 @@ const ListRow = ({ data }: ItemProps) => {
               transitionInterval={2000}
             />
 
-            <p className="font-bold text-black text-lg text-left w-full">{(data.postDetails as SalesType).price}</p>
+            <p className="font-bold text-black text-lg text-left w-full">
+              {(data.postDetails as SalesType).price}
+            </p>
             <p className="font-bold text-black text-base text-left w-full">
               {data.postDetails.title}
             </p>
-            <p className="text-black text-xs text-left w-full"> Equipment Name:{' '} 
-              {(data.postDetails as SalesType).equipmentName}
+            <p className="text-black text-xs text-left w-full">
+              {' '}
+              Equipment Name: {(data.postDetails as SalesType).equipmentName}
             </p>
-            <p className="text-black text-xs text-left w-full">Equipement Model:{' '}
-              {(data.postDetails as SalesType).equipmentModel}
+            <p className="text-black text-xs text-left w-full">
+              Equipement Model: {(data.postDetails as SalesType).equipmentModel}
             </p>
-            <p className='text-left w-full my-2'>{data.postDetails.description}</p>
+            <p className="text-left w-full my-2">
+              {data.postDetails.description}
+            </p>
             <hr className="font-bold m-2 w-full" />
-            <div className="flex flex-row justify-between  w-full"> <p>Created on</p>
+            <div className="flex flex-row justify-between  w-full">
+              {' '}
+              <p>Created on</p>
               <p>{formatDate((data.postDetails as SalesType).createdAt)}</p>
             </div>
           </div>
@@ -317,16 +369,19 @@ const ListRow = ({ data }: ItemProps) => {
               {data.postDetails.title}
             </p>
 
+            <p className="text-left w-full">{data.postDetails.description}</p>
+            <div className="flex flex-row gap-4 justify-start w-full my-2">
+              {(data.postDetails as NewsType).tags.map((item) => (
+                <Tag className="bg-green-600" value={item} rounded></Tag>
+              ))}
+            </div>
 
-            <p className='text-left w-full'>{data.postDetails.description}</p>
-            <div className='flex flex-row gap-4 justify-start w-full my-2'>{(data.postDetails as NewsType).tags.map((item)=><Tag className='bg-green-600' value={item} rounded></Tag>)}</div>
-            
             <hr className="font-bold m-2 w-full" />
-            <div className="flex flex-row justify-between w-full"><p>Created on</p>
+            <div className="flex flex-row justify-between w-full">
+              <p>Created on</p>
               <p>{formatDate((data.postDetails as NewsType).createdAt)}</p>
             </div>
           </div>
-
         )}
       </Dialog>
     </tr>

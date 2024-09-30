@@ -14,8 +14,7 @@ import {
   getApprovalsAction,
   updateApprovalsAction,
 } from '../redux/slices/approvalSlice';
-
-
+import NoData from '../components/common/NoData';
 
 function Approval() {
   const dispatch = useDispatch();
@@ -92,11 +91,13 @@ function Approval() {
               </thead>
               <tbody>
                 {approvals &&
+                  approvals.length > 0 &&
                   approvals.map((item) => (
-                    <ApprovalRecord data={item} key={item._id}/>
+                    <ApprovalRecord data={item} key={item._id} />
                   ))}
               </tbody>
             </table>
+            {approvals && approvals.length == 0 ? <NoData text='No approval requests'/> : null}
           </div>
         </div>
       </div>
@@ -104,7 +105,7 @@ function Approval() {
   );
 }
 
-type ItemProps ={
+type ItemProps = {
   data: ApprovalType;
 };
 
