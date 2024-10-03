@@ -32,7 +32,7 @@ function* saveAdvertisement(action: any): any {
   try {
     yield put(setLoading(true));
 
-    const response = yield call(
+    yield call(
       axiosInstance.post,
       endpoints.advertisement.create,
       action.payload
