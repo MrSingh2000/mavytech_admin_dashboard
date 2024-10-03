@@ -18,8 +18,6 @@ function* getEquipments(): any {
       endpoints.equipment.fetchAll
     );
 
-    console.log('respnse: ', response.data.value);
-
     yield put(updateEquipments(response.data.value));
 
     yield put(setLoading(false));
@@ -33,13 +31,11 @@ function* saveEquipment(action: any): any {
   try {
     yield put(setLoading(true));
 
-    const response = yield call(
+    yield call(
       axiosInstance.post,
       endpoints.equipment.create,
       action.payload
     );
-
-    console.log('respnse: ', response);
 
     yield put(setLoading(false));
   } catch (error) {

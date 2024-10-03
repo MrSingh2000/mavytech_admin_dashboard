@@ -31,6 +31,7 @@ const Login: React.FC = () => {
         backgroundImage: `url(${Bg})`,
         backgroundSize: 'cover',
       }}
+      className='w-screen'
     >
       <div className="flex bg-white bg-opacity-50">
         <div className="flex flex-col items-center justify-center mx-auto md:h-screen lg:py-0">

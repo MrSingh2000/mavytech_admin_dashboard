@@ -17,7 +17,6 @@ function* getApprovals(): any {
       axiosInstance.get, endpoints.approval.fetchAll
     );
 
-    console.log('resopnse: ', response.data.value);
     yield put(setApprovals(response.data.value));
 
 //yield put(updateApprovals(response.data.value));

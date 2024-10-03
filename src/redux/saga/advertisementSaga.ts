@@ -19,8 +19,6 @@ function* getAdvertisements(): any {
       endpoints.advertisement.fetchAll
     );
 
-    console.log('respnse: ', response.data.value);
-
     yield put(setAdvertisements(response.data.value));
 
     yield put(setLoading(false));
@@ -40,9 +38,8 @@ function* saveAdvertisement(action: any): any {
       action.payload
     );
 
-    console.log('respnse: ', response);
 
-    yield put({type: getAdvertisementsAction.type})
+    yield put({ type: getAdvertisementsAction.type });
 
     yield put(setLoading(false));
   } catch (error) {
@@ -61,8 +58,6 @@ function* updateAdvertisement(action: any): any {
     );
 
     yield put({ type: getAdvertisementsAction.type });
-
-    console.log('respnse: ', response);
 
     yield put(setLoading(false));
   } catch (error) {
@@ -102,4 +97,3 @@ export function* watchDeleteAdvertisementSaga() {
 export function* watchUpdateAdvertisementSaga() {
   yield takeEvery(updateAdvertisementAction.type, updateAdvertisement);
 }
-
