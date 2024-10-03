@@ -39,7 +39,7 @@ function* rejectFlagged(action: any): any {
   try {
     yield put(setLoading(true));
 
-    const response = yield call(
+    yield call(
       axiosInstance.put,
       createUrl(`${endpoints.flagged.reject}/${action.payload}`),
       action.payload

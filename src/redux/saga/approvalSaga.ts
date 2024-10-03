@@ -19,8 +19,6 @@ function* getApprovals(): any {
 
     yield put(setApprovals(response.data.value));
 
-//yield put(updateApprovals(response.data.value));
-
     yield put(setLoading(false));
   } catch (error) {
     console.log('err; ', error);
@@ -37,7 +35,7 @@ function* updateApproval(action: any): any {
       createUrl(`${endpoints.approval.update}/${action.payload}`),
       action.payload
     );
-    yield put({type: setApprovals.type})
+    yield put({type: getApprovalsAction.type})
 
     yield put(setLoading(false));
   } catch (error) {

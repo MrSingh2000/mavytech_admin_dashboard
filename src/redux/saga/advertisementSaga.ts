@@ -51,7 +51,7 @@ function* updateAdvertisement(action: any): any {
   try {
     yield put(setLoading(true));
 
-    const response = yield call(
+    yield call(
       axiosInstance.put,
       `${endpoints.advertisement.update}/${action.payload.id}`,
       action.payload.data

@@ -36,6 +36,7 @@ function* saveDocument(action: any): any {
       endpoints.document.create,
       action.payload
     );
+    yield put({ type: getDocumentsAction.type });
 
     yield put(setLoading(false));
   } catch (error) {

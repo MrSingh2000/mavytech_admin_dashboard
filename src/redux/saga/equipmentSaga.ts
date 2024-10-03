@@ -37,6 +37,8 @@ function* saveEquipment(action: any): any {
       action.payload
     );
 
+    yield put({ type: getEquipmentsAction.type });
+
     yield put(setLoading(false));
   } catch (error) {
     yield put(setLoading(false));
