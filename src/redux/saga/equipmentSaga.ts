@@ -9,16 +9,25 @@ import { setLoading } from '../slices/loadingSlice';
 import axiosInstance from '../../api-util/api';
 import endpoints from '../../api-util/endpoints';
 
-function* getEquipments(): any {
+function* getEquipments(action: any): any {
   try {
     yield put(setLoading(true));
 
+    const { page = 1, limit = 3} = action.payload || {};
+
     const response = yield call(
       axiosInstance.get,
-      endpoints.equipment.fetchAll
+      `${endpoints.equipment.fetchAll}?page=${page}&limit=${limit}`
     );
+    const equipmentData = response?.data?.value?.data || [];
 
-    yield put(updateEquipments(response.data.value));
+    yield put(updateEquipments({
+      equipment: equipmentData,
+      totalRecords: response.data.value.totalRecords,
+      currentPage: parseInt(response.data.value.currentPage),
+      limit: parseInt(response.data.value.limit),
+      totalPages: response.data.value.totalPages
+    }));
 
     yield put(setLoading(false));
   } catch (error) {

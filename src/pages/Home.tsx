@@ -3,7 +3,7 @@ import { Bar, Line, Pie, Doughnut } from 'react-chartjs-2'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, TimeScale } from 'chart.js'
 import 'chartjs-adapter-date-fns'
 import { motion } from 'framer-motion'
-import { ArrowUpRight, ArrowDownRight, Users } from 'lucide-react'
+import { FiArrowUpRight, FiArrowDownRight, FiUsers } from 'react-icons/fi'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Title, Tooltip, Legend, TimeScale)
 
@@ -104,7 +104,7 @@ const StatCard = ({ title, value, change, icon }) => (
     </div>
     <p className="mt-2 text-3xl font-semibold">{value}</p>
     <p className={`mt-2 flex items-center ${change >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-      {change >= 0 ? <ArrowUpRight className="mr-1 h-4 w-4" /> : <ArrowDownRight className="mr-1 h-4 w-4" />}
+      {change >= 0 ? <FiArrowUpRight className="mr-1 h-4 w-4" /> : <FiArrowDownRight className="mr-1 h-4 w-4" />}
       {Math.abs(change)}%
     </p>
   </motion.div>
@@ -448,19 +448,19 @@ export default function Home() {
           title="Average Daily Users"
           value="1,234"
           change={5.7}
-          icon={<Users className="h-6 w-6 text-blue-500" />}
+          icon={<FiUsers className="h-6 w-6 text-blue-500" />}
         />
         <StatCard
           title="Average Weekly Users"
           value="8,765"
           change={-2.3}
-          icon={<Users className="h-6 w-6 text-green-500" />}
+          icon={<FiUsers className="h-6 w-6 text-green-500" />}
         />
         <StatCard
           title="Average Monthly Users"
           value="35,790"
           change={12.1}
-          icon={<Users className="h-6 w-6 text-purple-500" />}
+          icon={<FiUsers className="h-6 w-6 text-purple-500" />}
         />
       </div>
       </section>
