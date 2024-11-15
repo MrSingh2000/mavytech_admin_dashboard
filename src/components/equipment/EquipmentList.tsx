@@ -1,15 +1,16 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { EquipmentType } from '../../types'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
+import 'primereact/resources/primereact.css';
+import 'primereact/resources/themes/saga-green/theme.css';
+import { Accordion, AccordionTab } from 'primereact/accordion'
+import { Button } from 'primereact/button'
+import { Card } from 'primereact/card'
+import { Dropdown } from 'primereact/dropdown'
 import { FaPencilAlt, FaImage, FaDownload } from 'react-icons/fa'
 import { IoWarning } from 'react-icons/io5'
 import { MdDeleteForever } from 'react-icons/md'
-import { HiOutlineChevronLeft, HiOutlineChevronRight, HiOutlineChevronDoubleLeft, HiOutlineChevronDoubleRight  } from 'react-icons/hi'
+import { HiOutlineChevronLeft, HiOutlineChevronRight, HiOutlineChevronDoubleLeft, HiOutlineChevronDoubleRight } from 'react-icons/hi'
 import { createUrl } from '../../helper/functions'
 import { RootState } from '../../redux/store'
 import { deleteEquipmentAction, getEquipmentsAction } from '../../redux/slices/equipmentSlice'
@@ -22,6 +23,7 @@ export default function EquipmentList({ setSelectedEquipment }: Props) {
   const dispatch = useDispatch()
   const equipments = useSelector((store: RootState) => store.equipment.data)
   const totalPages = useSelector((store: RootState) => store.equipment.totalPages)
+  const totalRecords = useSelector((store: RootState) => store.equipment.totalRecords)
   const limit = useSelector((store: RootState) => store.equipment.limit)
   const currentPage = useSelector((store: RootState) => store.equipment.currentPage)
 
@@ -38,8 +40,9 @@ export default function EquipmentList({ setSelectedEquipment }: Props) {
   }
 
   const handleEdit = (equipment: EquipmentType) => {
-    setSelectedEquipment(equipment)
-  }
+    setSelectedEquipment(equipment);
+  };
+  
 
   const handleDelete = (id: string) => {
     dispatch({ type: deleteEquipmentAction.type, payload: id })
@@ -47,153 +50,154 @@ export default function EquipmentList({ setSelectedEquipment }: Props) {
 
   return (
     <div className="container mx-auto p-4 bg-gray-50">
-      <div className='mb-4 flex justify-between items-center gap-2'>
+      <div className='mb-6 flex justify-between items-center gap-2'>
         <h1 className='text-xl font-bold ms-1 md:text-2xl'>Equipment List</h1>
         <div className='flex gap-2 items-center'>
-        <Label htmlFor="limit">Items per page: </Label>
-        <Select value={`${limit}`} onValueChange={(value) => handleLimitChange(Number(value))}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select limit" />
-          </SelectTrigger>
-          <SelectContent>
-            {[3, 5, 10, 15].map((value) => (
-              <SelectItem key={value} value={`${value}`}>{value}</SelectItem>
-            ))}
-            <SelectItem value="0">All</SelectItem>
-          </SelectContent>
-        </Select>
+          <label htmlFor="limit" className="text-sm font-medium">Items per page: </label>
+          <Dropdown
+            id="limit"
+            value={limit}
+            options={[3, 5, 10, 15, { label: 'All', value: totalRecords }]}
+            onChange={(e) => handleLimitChange(e.value)}
+            className="w-[180px] p-1.5 shadow-md rounded"
+          />
         </div>
       </div>
-
-      <Accordion type="single" collapsible className="w-full space-y-4">
-        {equipments.map((equipment: any, index: number) => (
-          <AccordionItem value={`${index}`} key={index} className="border rounded-lg overflow-hidden">
-            <AccordionTrigger className="text-left hover:no-underline">
-              <div className="flex items-center justify-between w-full pr-4 py-2 px-4">
-                <div className="flex items-center space-x-4">
-                  {equipment.image ? (
-                    <img src={createUrl(equipment.image)} alt={equipment.name} className="rounded-md w-[50px] h-[50px]" />
+      {equipments.length > 0 ? (
+  <Accordion multiple className="w-full space-y-4">
+    {equipments.map((equipment, index) => (
+      <AccordionTab
+        key={index}
+        header={
+          <div className="flex items-center justify-between w-full pr-4 py-2 px-4">
+            <div className="flex items-center space-x-4">
+              {equipment.image ? (
+                <img src={createUrl(equipment.image)} alt={equipment.name} className="rounded-md w-[50px] h-[50px]" />
+              ) : (
+                <div className="w-12 h-12 bg-gray-200 rounded-md flex items-center justify-center">
+                  <FaImage className="text-gray-400" size={24} />
+                </div>
+              )}
+              <span className="font-semibold text-lg">{equipment.name}</span>
+            </div>
+            <span className="text-sm text-gray-600 bg-blue-100 px-2 py-1 rounded-full">
+              {equipment.models.length} models
+            </span>
+          </div>
+        }
+      >
+        <Card className="mt-2 rounded-md shadow-md">
+          <div className="p-4">
+            <p className="text-gray-600 mb-4">{equipment.description}</p>
+            <div className="grid grid-cols-5 gap-4 font-semibold mb-2 px-4 py-2 bg-gray-100 rounded-md">
+              <div>Model</div>
+              <div>User Manual</div>
+              <div>Service Manual</div>
+              <div className="col-span-2">Actions</div>
+            </div>
+            {equipment.models.map((model) => (
+              <div key={model._id} className="grid grid-cols-5 gap-4 border-b last:border-b-0 py-3 px-4 items-center">
+                <div className="font-medium">{model.machineModel}</div>
+                <div>
+                  {model.userManual ? (
+                    <Button
+                      icon={<FaDownload className="text-white" />}
+                      onClick={() => handleOpenPdf(createUrl(model.userManual))}
+                      className="p-0 w-8 h-8 bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700"
+                    />
                   ) : (
-                    <div className="w-12 h-12 bg-gray-200 rounded-md flex items-center justify-center">
-                      <FaImage className="text-gray-400" size={24} />
+                    <div className="flex items-center text-yellow-600">
+                      <IoWarning size={25} />
                     </div>
                   )}
-                  <span className="font-semibold text-lg">{equipment.name}</span>
                 </div>
-                <span className="text-sm text-muted-foreground bg-primary/10 px-2 py-1 rounded-full">
-                  {equipment.models.length} models
-                </span>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="pb-0">
-              <Card className="mt-2 rounded-md">
-                <CardContent className="p-4">
-                  <p className="text-muted-foreground mb-4">{equipment.description}</p>
-                  <div className="grid grid-cols-5 gap-4 font-semibold mb-2 px-4 py-2 bg-primary/5 rounded-md">
-                    <div>Model</div>
-                    <div>User Manual</div>
-                    <div>Service Manual</div>
-                    <div className="col-span-2">Actions</div>
-                  </div>
-                  {equipment.models.map((model) => (
-                    <div key={model._id} className="grid grid-cols-5 gap-4 border-b last:border-b-0 py-3 px-4 items-center">
-                      <div className="font-medium">{model.machineModel}</div>
-                      <div>
-                        {model.userManual ? (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleOpenPdf(createUrl(model.userManual))}
-                            className="flex justify-center items-center  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  w-8 h-8 rounded-lg"
-                          >
-                            <FaDownload size={25} color='white' />
-                          </Button>
-                        ) : (
-                          <div className="flex items-center text-yellow-600">
-                            <IoWarning size={25} />
-                          </div>
-                        )}
-                      </div>
-                      <div>
-                        {model.serviceManual ? (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleOpenPdf(createUrl(model.serviceManual))}
-                            className="flex justify-center items-center  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  w-8 h-8 rounded-lg"
-                          >
-                            <FaDownload size={25} color="white" />
-                          </Button>
-                        ) : (
-                          <div className="flex items-center text-yellow-600">
-                            <IoWarning size={25} />
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex space-x-2 col-span-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleEdit({
-                            name: equipment?.name,
-                            description: equipment?.description,
-                            image: equipment?.image,
-                            _id: model?._id,
-                            machineModel: model?.machineModel,
-                            userManual: model?.userManual,
-                            serviceManual: model?.serviceManual
-                          })}
-                          className="flex justify-center items-center  bg-green-600 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-green-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 w-8 h-8 rounded-lg "
-                        >
-                          <FaPencilAlt color='white' />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleDelete(model?._id)}
-                          className="flex justify-center items-center  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white  transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 w-8 h-8 rounded-lg "
-                        >
-                          <MdDeleteForever color='white' />
-                        </Button>
-                      </div>
+                <div>
+                  {model.serviceManual ? (
+                    <Button
+                      icon={<FaDownload className="text-white" />}
+                      onClick={() => handleOpenPdf(createUrl(model.serviceManual))}
+                      className="p-0 w-8 h-8 bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700"
+                    />
+                  ) : (
+                    <div className="flex items-center text-yellow-600">
+                      <IoWarning size={25} />
                     </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+                  )}
+                </div>
+                <div className="flex space-x-2 col-span-2">
+                  <Button
+                    icon={<FaPencilAlt className="text-white" />}
+                    onClick={() =>
+                      handleEdit({
+                        name: equipment?.name,
+                        description: equipment?.description,
+                        image: equipment?.image,
+                        _id: model?._id,
+                        machineModel: model?.machineModel,
+                        userManual: model?.userManual,
+                        serviceManual: model?.serviceManual,
+                      })
+                    }
+                    className="p-0 w-8 h-8 bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700"
+                  />
+                  <Button
+                    icon={<MdDeleteForever className="text-white" />}
+                    onClick={() => handleDelete(model?._id)}
+                    className="p-0 w-8 h-8 bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </AccordionTab>
+    ))}
+  </Accordion>
+) : (
+  <div className="flex justify-center items-center h-[200px]">
+    <p className="text-gray-600 text-xl">No equipments found</p>
+  </div>
+)}
+
 
       <div className='mt-8 flex flex-col items-center gap-4'>
         <div className='flex justify-center items-center gap-2'>
-          <Button variant='outline' size='sm' disabled={currentPage === 1} onClick={() => handlePageChange(1)}>
-            <HiOutlineChevronDoubleLeft className="h-4 w-4" />
-          </Button>
-          <Button variant='outline' size='sm' disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>
-            <HiOutlineChevronLeft className="h-4 w-4" />
-          </Button>
+          <Button
+            icon={<HiOutlineChevronDoubleLeft className="h-4 w-4" />}
+            onClick={() => handlePageChange(1)}
+            disabled={currentPage === 1}
+            className="p-0 w-8 h-8"
+          />
+          <Button
+            icon={<HiOutlineChevronLeft className="h-4 w-4" />}
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="p-0 w-8 h-8"
+          />
           
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <Button
               key={page}
-              variant={currentPage === page ? 'default' : 'outline'}
-              size='sm'
+              label={`${page}`}
               onClick={() => handlePageChange(page)}
-              className={currentPage === page ? 'bg-primary text-primary-foreground' : ''}
-            >
-              {page}
-            </Button>
+              className={`p-0 w-8 h-8 ${currentPage === page ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 border-blue-600'}`}
+            />
           ))}
           
-          <Button variant='outline' size='sm' disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)}>
-            <HiOutlineChevronRight className="h-4 w-4" />
-          </Button>
-          <Button variant='outline' size='sm' disabled={currentPage === totalPages} onClick={() => handlePageChange(totalPages)}>
-            <HiOutlineChevronDoubleRight className="h-4 w-4" />
-          </Button>
+          <Button
+            icon={<HiOutlineChevronRight className="h-4 w-4" />}
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="p-0 w-8 h-8"
+          />
+          <Button
+            icon={<HiOutlineChevronDoubleRight className="h-4 w-4" />}
+            onClick={() => handlePageChange(totalPages)}
+            disabled={currentPage === totalPages}
+            className="p-0 w-8 h-8"
+          />
         </div>
-        <p className='text-sm text-muted-foreground'>
+        <p className='text-sm text-gray-600'>
           Page {currentPage} of {totalPages}
         </p>
       </div>
