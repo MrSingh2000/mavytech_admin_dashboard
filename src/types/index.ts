@@ -13,6 +13,29 @@ export type EquipmentType = {
   userManual: string;
   serviceManual: string;
 };
+
+export type ModelType = {
+  _id: string;
+  machineModel: string;
+  userManual: string;
+  serviceManual: string;
+};
+
+export type MachineType = {
+  name: string;
+  image: string;
+  description: string;
+  models: ModelType[];
+};
+
+export type EquipmentState = {
+  data: MachineType[];
+  totalRecords: number,
+  currentPage: number,
+  limit: number,
+  totalPages: number,
+  selectedEquipment: EquipmentType | null;
+};
 export type ApprovalType = {
   _id: string;
   name: string;

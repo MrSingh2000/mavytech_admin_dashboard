@@ -4,6 +4,7 @@ const equipment = {
   fetchSingle: '/equipment/get',
   update: '/equipment/update',
   delete: '/equipment/delete',
+  fetchAllByPage: '/equipment/getAllByPage',
 };
 
 const  document= {
