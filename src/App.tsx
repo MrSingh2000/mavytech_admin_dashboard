@@ -13,9 +13,9 @@ import UserList from './pages/UserList';
 import Login from './pages/LogIn';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Notfound from './pages/Notfound';
+import Loader from './components/common/Loader';
 
 function App() {
-  // const isLoading = useSelector((store: RootState) => store.loading.value);
 
   return (
     <>
@@ -52,7 +52,7 @@ function App() {
         <Route path="*" Component={Notfound} />
       </Routes>
 
-      {/* {isLoading && <Loader />} */}
+      <Loader />
     </>
   );
 }
