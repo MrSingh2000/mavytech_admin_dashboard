@@ -25,8 +25,6 @@ function Approval() {
     (store: RootState) => store.approval.allApproval
   );
 
-  console.log(approvals);
-
   return (
     <div className="container ">
       <div className="py-8">

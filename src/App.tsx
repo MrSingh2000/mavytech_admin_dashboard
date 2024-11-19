@@ -15,6 +15,8 @@ import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Notfound from './pages/Notfound';
 
 function App() {
+  // const isLoading = useSelector((store: RootState) => store.loading.value);
+
   return (
     <>
       <ToastContainer
@@ -49,6 +51,8 @@ function App() {
         </Route>
         <Route path="*" Component={Notfound} />
       </Routes>
+
+      {/* {isLoading && <Loader />} */}
     </>
   );
 }

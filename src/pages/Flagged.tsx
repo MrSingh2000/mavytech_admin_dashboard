@@ -27,11 +27,9 @@ function Flagged() {
   const dispatch = useDispatch();
   const [category, setCategory] = useState<string>('Services');
   const flaggeditems = useSelector((state: RootState) => state.flagged);
-  console.log(flaggeditems);
 
   useEffect(() => {
     dispatch({ type: getFlagsAction.type });
-    console.log('dispatched');
   }, []);
 
   return (

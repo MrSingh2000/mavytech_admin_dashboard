@@ -17,10 +17,7 @@ function* getApprovals(): any {
       axiosInstance.get, endpoints.approval.fetchAll
     );
 
-    console.log('resopnse: ', response.data.value);
     yield put(setApprovals(response.data.value));
-
-//yield put(updateApprovals(response.data.value));
 
     yield put(setLoading(false));
   } catch (error) {
@@ -38,7 +35,7 @@ function* updateApproval(action: any): any {
       createUrl(`${endpoints.approval.update}/${action.payload}`),
       action.payload
     );
-    yield put({type: setApprovals.type})
+    yield put({type: getApprovalsAction.type})
 
     yield put(setLoading(false));
   } catch (error) {

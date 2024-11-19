@@ -11,8 +11,6 @@ axiosInstance.interceptors.request.use((config: any) => {
 
   config.baseURL = import.meta.env.VITE_SERVER_PORT;
 
-  console.log(import.meta.env.VITE_SERVER_PORT);
-
   const excludedEndpoints = [endpoints.auth.login];
 
   if (!excludedEndpoints.includes(config.url || '')) {

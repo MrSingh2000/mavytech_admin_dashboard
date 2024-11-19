@@ -30,6 +30,7 @@ export default function* rootSaga() {
     fork(watchGetFlaggedSaga),
     fork(watchGetUsersSaga),
     fork(watchUpdateUserSaga),
-    fork(watchUserLogin)
+    fork(watchUserLogin),
+    fork(watchDeleteAdvertisementSaga),
   ]);
 }

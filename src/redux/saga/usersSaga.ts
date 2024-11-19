@@ -14,8 +14,6 @@ function* getUsers(): any {
 
     const response = yield call(axiosInstance.get, endpoints.users.fetchAll);
 
-    console.log('response: ', response.data.value);
-
     // Dispatch the action to update the User state with fetched data
     yield put(setUsers(response.data.value));
 

@@ -19,7 +19,6 @@ function* getAllFlags(): any {
   yield* withLoadingAndErrorHandling(function* (): any {
       const response = yield call(axiosInstance.get, endpoints.flagged.fetchAll);
       const data: FlaggedType[] = response.data.value;
-      console.log('here')
       yield put(
         setServicesFlags(
           data.filter((item) => item.postModel === FlaggedModels.SERVICES)
@@ -40,13 +39,11 @@ function* rejectFlagged(action: any): any {
   try {
     yield put(setLoading(true));
 
-    const response = yield call(
+    yield call(
       axiosInstance.put,
       createUrl(`${endpoints.flagged.reject}/${action.payload}`),
       action.payload
     );
-
-    console.log('respnse: ', response);
 
     yield put({ type: getFlagsAction.type });
 

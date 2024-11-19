@@ -17,8 +17,6 @@ function* getDocuments(): any {
 
     const response = yield call(axiosInstance.get, endpoints.document.fetchAll);
 
-    console.log('response: ', response.data.value);
-
     // Dispatch the action to update the document state with fetched data
     yield put(setDocuments(response.data.value));
 
@@ -33,13 +31,12 @@ function* saveDocument(action: any): any {
   try {
     yield put(setLoading(true));
 
-    const response = yield call(
+    yield call(
       axiosInstance.post,
       endpoints.document.create,
       action.payload
     );
-
-    console.log('respnse: ', response);
+    yield put({ type: getDocumentsAction.type });
 
     yield put(setLoading(false));
   } catch (error) {
