@@ -5,7 +5,7 @@ import {
   watchUpdateEquipmentSaga,
 } from './equipmentSaga';
 import { watchDeleteDocumentSaga, watchGetDocumentsSaga, watchCreateDocumentSaga } from './documentSaga';
-import { watchCreateAdvertisementSaga, watchUpdateAdvertisementSaga,watchGetAdvertisementSaga } from './advertisementSaga';
+import { watchCreateAdvertisementSaga, watchUpdateAdvertisementSaga,watchGetAdvertisementSaga, watchDeleteAdvertisementSaga } from './advertisementSaga';
 import { watchGetApprovalSaga, watchUpdateApprovalSaga } from './approvalSaga';
 import { watchAcceptFlaggedSaga, watchGetFlaggedSaga, watchRejectFlaggedSaga } from './flaggedSaga';
 import { watchGetUsersSaga, watchUpdateUserSaga } from './usersSaga';
@@ -22,6 +22,7 @@ export default function* rootSaga() {
     fork(watchGetAdvertisementSaga),
     fork(watchCreateAdvertisementSaga),
     fork(watchUpdateAdvertisementSaga),
+    fork(watchDeleteAdvertisementSaga),
     fork(watchGetApprovalSaga),
     fork(watchUpdateApprovalSaga),
     fork(watchAcceptFlaggedSaga),
