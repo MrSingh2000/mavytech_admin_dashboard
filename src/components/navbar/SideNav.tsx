@@ -1,10 +1,11 @@
 import { ReactElement } from 'react';
 import { IoDocumentsOutline, IoHomeOutline } from 'react-icons/io5';
-import { TbWashMachine } from 'react-icons/tb';
+import { TbPigMoney, TbWashMachine } from 'react-icons/tb';
 import { PiTelevisionDuotone } from "react-icons/pi";
 import { NavLink } from 'react-router-dom';
 import { MdOutlineApproval } from 'react-icons/md';
 import { FaRegFlag, FaRegUserCircle } from "react-icons/fa";
+import { GiTakeMyMoney } from 'react-icons/gi';
 
 type NavItemType = {
   icon: ReactElement;
@@ -48,6 +49,11 @@ function SideNav() {
       icon: <FaRegUserCircle/>,
       title: 'Users',
       navLink: '/allusers',
+    },
+    {
+      icon: <TbPigMoney/>,
+      title: 'Referral Points',
+      navLink: '/referrals',
     },
   ];
 
