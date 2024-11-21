@@ -215,19 +215,28 @@ const ListItem = ({ data, setSelectedAdvertisement }: ItemProps) => {
           >
             <FaPencilAlt color="white" />
           </button>
+          
 
           <button
-            onClick={() =>
-              dispatch({
-                type: deleteAdvertisementAction.type,
-                payload: data._id,
-              })
-            }
-            type="button"
-            className="flex justify-center items-center  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white  transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 w-8 h-8 rounded-lg "
-          >
-            <MdDeleteForever color="white" />
-          </button>
+  onClick={() => {
+    console.log("Delete button clicked for ID:", data._id); // Debugging line
+
+    if (data._id) {
+      dispatch({
+        type: deleteAdvertisementAction.type,
+        payload: data._id,
+      });
+    } else {
+      console.error("Advertisement ID is missing:", data); // Error logging
+    }
+  }}
+  type="button"
+  className="flex justify-center items-center bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 w-8 h-8 rounded-lg"
+>
+  <MdDeleteForever color="white" />
+</button>
+
+
         </div>
       </td>
     </tr>

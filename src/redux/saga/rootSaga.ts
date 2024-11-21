@@ -22,6 +22,7 @@ export default function* rootSaga() {
     fork(watchGetAdvertisementSaga),
     fork(watchCreateAdvertisementSaga),
     fork(watchUpdateAdvertisementSaga),
+    fork(watchDeleteAdvertisementSaga),
     fork(watchGetApprovalSaga),
     fork(watchUpdateApprovalSaga),
     fork(watchAcceptFlaggedSaga),
