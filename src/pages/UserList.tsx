@@ -114,13 +114,13 @@ const UserDetails = ({ data }: ItemProps) => {
   const [countryOptions, setCountryOptions] = useState<
     { label: string; value: string }[]
   >([]);
-
-  const [selectedCountry, setSelectedCountry] = useState<string>(''); // Single country selection
+  const [selectedCountry, setSelectedCountry] = useState<string>('');
   const [stateOptions, setStateOptions] = useState<
     { label: string; value: string }[]
   >([]);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     const countryOptions = Object.keys(countriesData).map((country) => ({
       label: country,
@@ -138,7 +138,7 @@ const UserDetails = ({ data }: ItemProps) => {
       }));
       setStateOptions(stateOptions);
     } else {
-      setStateOptions([]); // Clear state options when no country is selected
+      setStateOptions([]);
     }
   }, [selectedCountry]);
 
@@ -160,13 +160,15 @@ const UserDetails = ({ data }: ItemProps) => {
     <tr className="w-full">
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
         <div className="flex items-center">
-          <div className="flex-shrink-0">{formatDate(data.createdAt)}</div>
+          <div className="flex-shrink-0">
+            {data.createdAt ? formatDate(data.createdAt) : 'N/A'}
+          </div>
         </div>
       </td>
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
         <p className="text-gray-900 whitespace-no-wrap text-center">
           <Avatar
-            image={createUrl(data.imageUrl)}
+            image={data.imageUrl ? createUrl(data.imageUrl) : ''}
             shape="circle"
             size="xlarge"
             className="border-2 justify-stretch border-green-600"
@@ -174,32 +176,41 @@ const UserDetails = ({ data }: ItemProps) => {
         </p>
       </td>
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-        <div className="flex justify-center">{data.name}</div>
+        <div className="flex justify-center">{data.name || 'N/A'}</div>
       </td>
       <td className="pl-5 pr-2 py-5 text-sm bg-white border-b border-gray-200">
-        <div className="flex justify-center">{data.email}</div>
+        <div className="flex justify-center">
+          {typeof data.email === 'string' ? data.email : 'N/A'}
+        </div>
       </td>
       <td className="py-5 pl-5 pr-2 text-sm bg-white border-b border-gray-200">
-        <div className="flex justify-center">{data.phone}</div>
+        <div className="flex justify-center">
+          {typeof data.phone === 'string' ? data.phone : 'N/A'}
+        </div>
       </td>
       <td className="py-5 pl-5 pr-2 text-sm bg-white border-b border-gray-200">
-        <div className="flex justify-center">{data.state}</div>
+        <div className="flex justify-center">
+          {typeof data.state === 'string' ? data.state : 'N/A'}
+        </div>
       </td>
       <td className="py-5 pl-5 pr-2 text-sm bg-white border-b border-gray-200">
-        <div className="flex justify-center">{data.country}</div>
+        <div className="flex justify-center">
+          {typeof data.country === 'string' ? data.country : 'N/A'}
+        </div>
       </td>
 
-      <td className="px-5 py-5 text-sm bg-white border-b border-gray-200 ">
+      <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
         <div className="flex gap-2">
           <button
             onClick={() => setVisible(true)}
             type="button"
-            className="flex justify-center items-center  bg-green-600 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-green-200 text-white transition ease-in  duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 w-8 h-8 rounded-lg "
+            className="flex justify-center items-center bg-green-600 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-green-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 w-8 h-8 rounded-lg"
           >
             <FaPencilAlt color="white" />
           </button>
         </div>
       </td>
+
       <Dialog
         visible={visible}
         modal
@@ -224,7 +235,7 @@ const UserDetails = ({ data }: ItemProps) => {
                   value={selectedCountry}
                   onChange={(e) => setSelectedCountry(e.value)}
                   options={countryOptions}
-                  optionLabel="value"
+                  optionLabel="label"
                   className="rounded-lg mt-2 overflow-ellipsis border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent text-sm"
                   placeholder="Select a Country"
                 />
@@ -237,7 +248,7 @@ const UserDetails = ({ data }: ItemProps) => {
                   value={selectedState}
                   onChange={(e) => setSelectedState(e.value)}
                   options={stateOptions}
-                  optionLabel="value"
+                  optionLabel="label"
                   className="rounded-lg mt-2 overflow-ellipsis border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent text-sm"
                   placeholder="Select a State"
                 />
@@ -249,16 +260,7 @@ const UserDetails = ({ data }: ItemProps) => {
                 onClick={handleSave}
                 className="mt-4 py-2 px-4 flex justify-center items-center bg-green-600 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
               >
-                <svg
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="mr-2"
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z"></path>
-                </svg>
+                Save
               </button>
             </div>
           </div>

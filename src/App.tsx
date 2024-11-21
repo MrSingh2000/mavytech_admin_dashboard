@@ -13,11 +13,23 @@ import UserList from './pages/UserList';
 import Login from './pages/LogIn';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Notfound from './pages/Notfound';
+import ReferalRefund from './pages/ReferalRefund';
 
 function App() {
   // const isLoading = useSelector((store: RootState) => store.loading.value);
 
   return (
+    // <><Routes>
+    //     <Route
+    //     path="/"
+    //      Component={() => (
+    //       <Layout />
+    //   )}  >
+    //     <Route path="allusers" Component={UserList} />
+    //     </Route>
+    //     </Routes>
+    
+    // </>
     <>
       <ToastContainer
         position="top-right"
@@ -32,13 +44,12 @@ function App() {
         theme="light"
       />
       <Routes>
-        <Route path="/login" Component={Login} />
+         <Route path="/login" Component={Login} />
         <Route
           path="/"
           Component={() => (
-            <AuthenticatedRoute>
-              <Layout />
-            </AuthenticatedRoute>
+            <AuthenticatedRoute><Layout /></AuthenticatedRoute>
+              
           )}
         >
           <Route path="" Component={Home} />
@@ -48,6 +59,8 @@ function App() {
           <Route path="approval" Component={Approval} />
           <Route path="flagged" Component={Flagged} />
           <Route path="allusers" Component={UserList} />
+          <Route path="referrals" Component={ReferalRefund} />
+
         </Route>
         <Route path="*" Component={Notfound} />
       </Routes>
