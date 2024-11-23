@@ -5,7 +5,7 @@ import { PiTelevisionDuotone } from "react-icons/pi";
 import { NavLink } from 'react-router-dom';
 import { MdOutlineApproval } from 'react-icons/md';
 import { FaRegFlag, FaRegUserCircle } from "react-icons/fa";
-import { GiTakeMyMoney } from 'react-icons/gi';
+import { FcDataConfiguration } from "react-icons/fc";
 
 type NavItemType = {
   icon: ReactElement;
@@ -54,6 +54,11 @@ function SideNav() {
       icon: <TbPigMoney/>,
       title: 'Referral Points',
       navLink: '/referrals',
+    },
+    {
+      icon: <FcDataConfiguration />,
+      title: 'Configuration',
+      navLink: '/config',
     },
   ];
 

@@ -8,6 +8,11 @@ export const setLocalStorageItem = (item: string, value: string): void => {
   localStorage.setItem(item, value);
 };
 
+export const clearLocalStorage = () => {
+  console.log("clearing")
+  localStorage.clear();
+};
+
 export const showToast = (
   message: string,
   type: 'error' | 'warn' | 'success' | 'info'

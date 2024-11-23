@@ -15,6 +15,7 @@ import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Notfound from './pages/Notfound';
 import Loader from './components/common/Loader';
 import ReferalRefund from './pages/ReferalRefund';
+import Configuration from './pages/Configuration';
 
 function App() {
 
@@ -60,7 +61,7 @@ function App() {
           <Route path="flagged" Component={Flagged} />
           <Route path="allusers" Component={UserList} />
           <Route path="referrals" Component={ReferalRefund} />
-
+          <Route path="config" Component={Configuration} />
         </Route>
         <Route path="*" Component={Notfound} />
       </Routes>

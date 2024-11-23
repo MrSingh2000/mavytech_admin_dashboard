@@ -30,10 +30,10 @@ export type MachineType = {
 
 export type EquipmentState = {
   data: MachineType[];
-  totalRecords: number,
-  currentPage: number,
-  limit: number,
-  totalPages: number,
+  totalRecords: number;
+  currentPage: number;
+  limit: number;
+  totalPages: number;
   selectedEquipment: EquipmentType | null;
 };
 export type ApprovalType = {
@@ -138,4 +138,14 @@ export type UserObjType = {
   country: string;
   createdAt: string;
   updatedAt: string;
+};
+
+export type AppConstantsType = {
+  minimalWithdrawalAmount: number;
+  referralAwardPoints: number;
+  rewardPointEquivalent: number;
+  subTier1Price: number;
+  subTier2Price: number;
+  subTier3Price: number;
+  subTier4Price: number;
 };
