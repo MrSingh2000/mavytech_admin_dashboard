@@ -16,6 +16,8 @@ import Notfound from './pages/Notfound';
 import Loader from './components/common/Loader';
 import ReferalRefund from './pages/ReferalRefund';
 import Configuration from './pages/Configuration';
+import 'primereact/resources/themes/saga-green/theme.css'; 
+import 'primereact/resources/primereact.min.css';
 
 function App() {
 

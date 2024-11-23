@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { DocumentType } from '../../types';
 import { deleteDocumentAction } from '../../redux/slices/documentSlice';
-import 'primereact/resources/primereact.css';
-import 'primereact/resources/themes/saga-green/theme.css';
 import { Tooltip } from 'primereact/tooltip';
 import NoData from '../common/NoData';
 

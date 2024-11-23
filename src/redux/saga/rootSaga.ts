@@ -27,6 +27,10 @@ import {
   watchGetAppConstantsSaga,
   watchUpdateAppConstantsSaga,
 } from './appContantsSaga';
+import {
+  watchGetWithdrawalRequestsSaga,
+  watchUpdateWithdrawalRequestsSaga,
+} from './withdrawalRequestsSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -51,5 +55,7 @@ export default function* rootSaga() {
     fork(watchDeleteAdvertisementSaga),
     fork(watchGetAppConstantsSaga),
     fork(watchUpdateAppConstantsSaga),
+    fork(watchGetWithdrawalRequestsSaga),
+    fork(watchUpdateWithdrawalRequestsSaga),
   ]);
 }

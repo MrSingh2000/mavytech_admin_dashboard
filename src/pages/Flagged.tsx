@@ -6,8 +6,6 @@ import {
   SalesType,
   ServicesType,
 } from '../types';
-import 'primereact/resources/primereact.css';
-import 'primereact/resources/themes/saga-green/theme.css';
 import { BsPostcard } from 'react-icons/bs';
 import { Dialog } from 'primereact/dialog';
 import { Galleria } from 'primereact/galleria';

@@ -2,8 +2,6 @@ import { FaPencilAlt } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import React, { useState } from 'react';
 import { Image } from 'primereact/image';
-import 'primereact/resources/primereact.css';
-import 'primereact/resources/themes/saga-green/theme.css';
 import { LuScreenShare } from 'react-icons/lu';
 import { createUrl } from '../../helper/functions';
 import { useDispatch, useSelector } from 'react-redux';

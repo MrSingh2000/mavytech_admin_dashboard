@@ -44,6 +44,11 @@ const appConstants = {
   update: '/appconstants',
 };
 
+const withdrawalRequest = {
+  get: '/wallet/withdraw',
+  update: '/wallet/update',
+};
+
 const endpoints = {
   equipment,
   document,
@@ -53,6 +58,7 @@ const endpoints = {
   flagged,
   auth,
   appConstants,
+  withdrawalRequest,
 };
 
 export default endpoints;

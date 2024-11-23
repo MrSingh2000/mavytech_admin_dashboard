@@ -1,8 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { MultiSelect } from 'primereact/multiselect';
 import countriesData from './countries.json';
-import 'primereact/resources/primereact.css';
-import 'primereact/resources/themes/saga-green/theme.css';
 import axiosInstance from '../../api-util/api';
 import endpoints from '../../api-util/endpoints';
 import { AdvertisementType } from '../../types';
