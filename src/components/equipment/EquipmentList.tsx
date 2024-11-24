@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { EquipmentType } from '../../types';
 import { Accordion, AccordionTab } from 'primereact/accordion';
@@ -25,9 +25,10 @@ type Props = {
   setSelectedEquipment: React.Dispatch<
     React.SetStateAction<EquipmentType | null>
   >;
+  handleFormScroll: () => void;
 };
 
-export default function EquipmentList({ setSelectedEquipment }: Props) {
+export default function EquipmentList({ setSelectedEquipment, handleFormScroll }: Props) {
   const dispatch = useDispatch();
   const equipments = useSelector((store: RootState) => store.equipment.data);
   const totalPages = useSelector(
@@ -41,11 +42,15 @@ export default function EquipmentList({ setSelectedEquipment }: Props) {
     (store: RootState) => store.equipment.currentPage
   );
 
+  const [activeTabIndex, setActiveTabIndex] = useState<number | null>();
+
   const handlePageChange = (changedPage: number) => {
+    setActiveTabIndex(null);
     dispatch(getEquipmentsAction({ page: changedPage, limit }));
   };
 
   const handleLimitChange = (value: number) => {
+    setActiveTabIndex(null);
     dispatch(getEquipmentsAction({ page: 1, limit: value }));
   };
 
@@ -55,14 +60,16 @@ export default function EquipmentList({ setSelectedEquipment }: Props) {
 
   const handleEdit = (equipment: EquipmentType) => {
     setSelectedEquipment(equipment);
+    handleFormScroll();
   };
 
   const handleDelete = (id: string) => {
+    setActiveTabIndex(null);
     dispatch({ type: deleteEquipmentAction.type, payload: id });
   };
 
   return (
-    <div className="container mx-auto p-4 bg-gray-50">
+    <div className="container mx-auto p-4 bg-gray-50 mt-8">
       <div className="mb-6 flex justify-between items-center gap-2">
         <h1 className="text-xl font-bold ms-1 md:text-2xl">Equipment List</h1>
         <div className="flex gap-2 items-center">
@@ -79,7 +86,12 @@ export default function EquipmentList({ setSelectedEquipment }: Props) {
         </div>
       </div>
       {equipments.length > 0 ? (
-        <Accordion multiple className="w-full space-y-4">
+        <Accordion
+          multiple={false}
+          activeIndex={activeTabIndex}
+          onTabChange={(e) => setActiveTabIndex(e.index as number | null)}
+          className="w-full space-y-4"
+        >
           {equipments.map((equipment, index) => (
             <AccordionTab
               key={index}
@@ -107,7 +119,7 @@ export default function EquipmentList({ setSelectedEquipment }: Props) {
                 </div>
               }
             >
-              <Card className="mt-2 rounded-md shadow-md">
+              <Card className="mt-2 rounded-md shadow-md max-h-80 overflow-y-scroll">
                 <div className="p-4">
                   <p className="text-gray-600 mb-4">{equipment.description}</p>
                   <div className="grid grid-cols-5 gap-4 font-semibold mb-2 px-4 py-2 bg-gray-100 rounded-md">
@@ -201,20 +213,22 @@ export default function EquipmentList({ setSelectedEquipment }: Props) {
             disabled={currentPage === 1}
             className="p-0 w-8 h-8"
           />
-
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <Button
-              key={page}
-              label={`${page}`}
-              onClick={() => handlePageChange(page)}
-              className={`p-0 w-8 h-8 ${
-                currentPage === page
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-blue-600 border-blue-600'
-              }`}
-            />
-          ))}
-
+          {Array.from({ length: Math.min(totalPages, 3) }, (_, i) => {
+            const startPage = Math.max(1, Math.min(currentPage - 1, totalPages - 2));
+            const page = startPage + i;
+            return (
+              <Button
+                key={page}
+                label={`${page}`}
+                onClick={() => handlePageChange(page)}
+                className={`p-0 w-8 h-8 ${
+                  currentPage === page
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-white text-blue-600 border-blue-600'
+                }`}
+              />
+            );
+          })}
           <Button
             icon={<HiOutlineChevronRight className="h-4 w-4" />}
             onClick={() => handlePageChange(currentPage + 1)}
