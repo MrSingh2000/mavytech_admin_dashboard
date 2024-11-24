@@ -4,12 +4,33 @@ import {
   watchCreateEquipmentSaga,
   watchUpdateEquipmentSaga,
 } from './equipmentSaga';
-import { watchDeleteDocumentSaga, watchGetDocumentsSaga, watchCreateDocumentSaga } from './documentSaga';
-import { watchCreateAdvertisementSaga, watchUpdateAdvertisementSaga,watchGetAdvertisementSaga, watchDeleteAdvertisementSaga } from './advertisementSaga';
+import {
+  watchDeleteDocumentSaga,
+  watchGetDocumentsSaga,
+  watchCreateDocumentSaga,
+} from './documentSaga';
+import {
+  watchCreateAdvertisementSaga,
+  watchUpdateAdvertisementSaga,
+  watchGetAdvertisementSaga,
+  watchDeleteAdvertisementSaga,
+} from './advertisementSaga';
 import { watchGetApprovalSaga, watchUpdateApprovalSaga } from './approvalSaga';
-import { watchAcceptFlaggedSaga, watchGetFlaggedSaga, watchRejectFlaggedSaga } from './flaggedSaga';
+import {
+  watchAcceptFlaggedSaga,
+  watchGetFlaggedSaga,
+  watchRejectFlaggedSaga,
+} from './flaggedSaga';
 import { watchGetUsersSaga, watchUpdateUserSaga } from './usersSaga';
 import { watchUserLogin } from './authSaga';
+import {
+  watchGetAppConstantsSaga,
+  watchUpdateAppConstantsSaga,
+} from './appContantsSaga';
+import {
+  watchGetWithdrawalRequestsSaga,
+  watchUpdateWithdrawalRequestsSaga,
+} from './withdrawalRequestsSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -22,6 +43,7 @@ export default function* rootSaga() {
     fork(watchGetAdvertisementSaga),
     fork(watchCreateAdvertisementSaga),
     fork(watchUpdateAdvertisementSaga),
+    fork(watchDeleteAdvertisementSaga),
     fork(watchGetApprovalSaga),
     fork(watchUpdateApprovalSaga),
     fork(watchAcceptFlaggedSaga),
@@ -31,5 +53,9 @@ export default function* rootSaga() {
     fork(watchUpdateUserSaga),
     fork(watchUserLogin),
     fork(watchDeleteAdvertisementSaga),
+    fork(watchGetAppConstantsSaga),
+    fork(watchUpdateAppConstantsSaga),
+    fork(watchGetWithdrawalRequestsSaga),
+    fork(watchUpdateWithdrawalRequestsSaga),
   ]);
 }

@@ -10,6 +10,8 @@ import approvalSlice from './slices/approvalSlice';
 import usersSlice, { updateUserAction } from './slices/usersSlice';
 import flaggedSlice from './slices/flaggedSlice';
 import authSlice from './slices/authSlice';
+import appConstantsSlice from './slices/appConstantsSlice';
+import withdrawalRequestSlice from './slices/withdrawalRequestSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -24,15 +26,15 @@ export const store = configureStore({
     users: usersSlice,
     flagged: flaggedSlice,
     user: authSlice,
+    appConstants: appConstantsSlice,
+    withdrawalRequests: withdrawalRequestSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [
-          updateUserAction.type
-        ],
-        ignoredPath: ['payload.formData']
-      }
+        ignoredActions: [updateUserAction.type],
+        ignoredPath: ['payload.formData'],
+      },
     }).concat([sagaMiddleware]),
 });
 

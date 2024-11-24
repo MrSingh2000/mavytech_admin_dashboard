@@ -7,37 +7,47 @@ const equipment = {
   fetchAllByPage: '/equipment/getAllByPage',
 };
 
-const  document= {
+const document = {
   create: '/documents',
   fetchAll: '/documents',
   delete: '/documents',
 };
 
-const  advertisement= {
+const advertisement = {
   create: '/advertisement/create',
   fetchAll: '/advertisement/all',
   delete: '/advertisement/remove',
-  update: '/advertisement/update'
+  update: '/advertisement/update',
 };
 
-const approval= {
+const approval = {
   fetchAll: '/equipment/approvals',
-  update: '/equipment/approvals'
+  update: '/equipment/approvals',
 };
 
-const users= {
+const users = {
   fetchAll: '/useraccount',
   update: '/useraccount',
 };
 
-const flagged= {
+const flagged = {
   fetchAll: '/flagged',
   reject: '/flagged',
-  accept: '/flagged'
-}
-const auth= {
-  login: '/auth/admin-login'
-}
+  accept: '/flagged',
+};
+const auth = {
+  login: '/auth/admin-login',
+};
+
+const appConstants = {
+  get: '/appconstants',
+  update: '/appconstants',
+};
+
+const withdrawalRequest = {
+  get: '/wallet/withdraw',
+  update: '/wallet/update',
+};
 
 const endpoints = {
   equipment,
@@ -46,8 +56,9 @@ const endpoints = {
   approval,
   users,
   flagged,
-  auth
-
+  auth,
+  appConstants,
+  withdrawalRequest,
 };
 
 export default endpoints;

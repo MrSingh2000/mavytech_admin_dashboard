@@ -124,6 +124,7 @@ const ApprovalRecord = ({ data }: ItemProps) => {
     // Open the PDF in a new tab
     window.open(url, '_blank');
   };
+
   return (
     <tr>
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">

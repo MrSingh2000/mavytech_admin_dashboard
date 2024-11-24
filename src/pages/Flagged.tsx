@@ -6,8 +6,6 @@ import {
   SalesType,
   ServicesType,
 } from '../types';
-import 'primereact/resources/primereact.css';
-import 'primereact/resources/themes/saga-green/theme.css';
 import { BsPostcard } from 'react-icons/bs';
 import { Dialog } from 'primereact/dialog';
 import { Galleria } from 'primereact/galleria';
@@ -205,10 +203,10 @@ const ListRow = ({ data }: ItemProps) => {
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
         <p className="text-gray-900 whitespace-no-wrap text-center">
           {data.postModel === FlaggedModels.SERVICES
-            ? (data.postDetails as ServicesType).postedBy.name
+            ? (data.postDetails as ServicesType).postedBy?.name
             : data.postModel === FlaggedModels.SALES
-            ? (data.postDetails as SalesType).postedBy.name
-            : (data.postDetails as NewsType).postedBy.name}
+            ? (data.postDetails as SalesType).postedBy?.name
+            : (data.postDetails as NewsType).postedBy?.name}
         </p>
       </td>
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">

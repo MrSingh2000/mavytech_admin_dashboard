@@ -15,15 +15,13 @@ const AuthenticatedRoute: React.FC<AuthenticatedRouteProps> = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuthenticated = useSelector(
-    (store: RootState) => store.user.authToken
+    (store: RootState) => store.user
   );
-  const [isLocalStorageAuth, setIsLocalStorageAuth] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true); // Added loading state
 
   useEffect(() => {
     const localData = getLocalStorageItem('user');
     if (!localData) {
-      setIsLocalStorageAuth(false);
       setLoading(false); // Update loading state
       return;
     }
@@ -31,7 +29,6 @@ const AuthenticatedRoute: React.FC<AuthenticatedRouteProps> = ({
     const parsedData = JSON.parse(localData);
     const userToken = parsedData.token;
     if (!userToken) {
-      setIsLocalStorageAuth(false);
       setLoading(false); // Update loading state
       return;
     }
@@ -43,16 +40,15 @@ const AuthenticatedRoute: React.FC<AuthenticatedRouteProps> = ({
         details: parsedData.details,
       })
     );
-    setIsLocalStorageAuth(true);
     setLoading(false); // Update loading state
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     // Only navigate once the loading state is false and user is not authenticated
-    if (!loading && !isAuthenticated && !isLocalStorageAuth) {
+    if (!loading && !isAuthenticated.authToken) {
       navigate('/login');
     }
-  }, [loading, isAuthenticated, isLocalStorageAuth, navigate]);
+  }, [loading, isAuthenticated]);
 
   // Show loading spinner or null until loading is complete
   if (loading) {

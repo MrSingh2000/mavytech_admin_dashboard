@@ -1,3 +1,5 @@
+import { SUBSCRIPTION_TIER } from "@/enum";
+
 export type APIResponse<T = any> = {
   message?: string;
   code?: number;
@@ -30,10 +32,10 @@ export type MachineType = {
 
 export type EquipmentState = {
   data: MachineType[];
-  totalRecords: number,
-  currentPage: number,
-  limit: number,
-  totalPages: number,
+  totalRecords: number;
+  currentPage: number;
+  limit: number;
+  totalPages: number;
   selectedEquipment: EquipmentType | null;
 };
 export type ApprovalType = {
@@ -131,11 +133,48 @@ export type UserObjType = {
   name: string;
   email: string;
   dob?: string;
-  phone?: string;
+  phone?: {
+    code: string;
+    number: string;
+  };
   imageUrl: string;
   role: string;
   state: string;
   country: string;
   createdAt: string;
   updatedAt: string;
+  subscriptionStatus: SUBSCRIPTION_TIER;
+  subscriptionExpirationDate: string;
+};
+
+export type AppConstantsType = {
+  minimalWithdrawalAmount: number;
+  referralAwardPoints: number;
+  rewardPointEquivalent: number;
+  subTier1Price: number;
+  subTier2Price: number;
+  subTier3Price: number;
+  subTier4Price: number;
+};
+
+export type WithdrawalTransactionType = {
+  amount: string;
+  type: 'debit' | 'credit';
+  isWithdrawalRequest: boolean;
+  status: string;
+  description: string;
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type WithdrawalRequestType = {
+  _id: string;
+  userId: string;
+  user: UserObjType;
+  credit: WithdrawalTransactionType[];
+  debit: WithdrawalTransactionType[];
+  total: number;
+  updatedAt: string;
+  createdAt: string;
 };

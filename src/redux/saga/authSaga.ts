@@ -6,7 +6,6 @@ import endpoints from '../../api-util/endpoints';
 import { setLocalStorageItem } from '../../helper/functions';
 
 function* login(action: any): any {
-  console.log('here')
   yield* withLoadingAndErrorHandling(function* (): any {
     const response = yield call(
       axiosInstance.post,
