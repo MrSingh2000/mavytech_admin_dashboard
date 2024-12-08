@@ -49,6 +49,18 @@ const withdrawalRequest = {
   update: '/wallet/update',
 };
 
+const learning = {
+  createVideo: '/learning/video', //post
+  createPlaylist: '/learning/playlist', //post
+  getVideos: '/learning/videos', //get
+  getPlaylist: '/learning/playlists', //get
+  removeVideo: '/learning/video', // ':id' , delete
+  removePlaylist: '/learning/playlist', // ':id' , delete
+  addVideoToPlaylist: '/learning', // /learning/_playlistId_/_videoId_ , PUT
+  removeVideoFromPlaylist: '/learning/remove', // /learning/remove/_playlistId_/_videoId_ , PUT
+  userLearning: '/learning/user', // GET
+};
+
 const endpoints = {
   equipment,
   document,
@@ -59,6 +71,7 @@ const endpoints = {
   auth,
   appConstants,
   withdrawalRequest,
+  learning,
 };
 
 export default endpoints;

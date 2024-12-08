@@ -4,14 +4,10 @@ import { RootState } from '../redux/store';
 import { getLocalStorageItem } from '../helper/functions';
 import { setUser } from '../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
+import Layout from './layout/Layout';
 
-interface AuthenticatedRouteProps {
-  children: React.ReactNode;
-}
 
-const AuthenticatedRoute: React.FC<AuthenticatedRouteProps> = ({
-  children,
-}) => {
+const AuthenticatedRoute: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuthenticated = useSelector(
@@ -41,6 +37,9 @@ const AuthenticatedRoute: React.FC<AuthenticatedRouteProps> = ({
       })
     );
     setLoading(false); // Update loading state
+
+
+    console.log("render here")
   }, []);
 
   useEffect(() => {
@@ -56,7 +55,7 @@ const AuthenticatedRoute: React.FC<AuthenticatedRouteProps> = ({
   }
 
   // Return the children after loading and authentication checks
-  return <>{children}</>;
+  return <Layout />;
 };
 
 export default AuthenticatedRoute;

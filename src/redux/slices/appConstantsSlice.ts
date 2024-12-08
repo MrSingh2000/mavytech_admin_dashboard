@@ -12,6 +12,11 @@ const initialState: AppConstantsType & {
   subTier3Price: 0,
   subTier4Price: 0,
   updatedAt: '',
+  learningOffer: {
+    discount: 0,
+    description: '',
+    title: '',
+  },
 };
 
 const appConstantsSlice = createSlice({
@@ -26,7 +31,10 @@ const appConstantsSlice = createSlice({
   },
 });
 
-export const { getAppContantsAction, setAppCostants, updateAppConstantsAction } =
-  appConstantsSlice.actions;
+export const {
+  getAppContantsAction,
+  setAppCostants,
+  updateAppConstantsAction,
+} = appConstantsSlice.actions;
 
 export default appConstantsSlice.reducer;

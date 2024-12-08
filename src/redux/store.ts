@@ -12,6 +12,7 @@ import flaggedSlice from './slices/flaggedSlice';
 import authSlice from './slices/authSlice';
 import appConstantsSlice from './slices/appConstantsSlice';
 import withdrawalRequestSlice from './slices/withdrawalRequestSlice';
+import learningSlice from './slices/learningSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -28,6 +29,7 @@ export const store = configureStore({
     user: authSlice,
     appConstants: appConstantsSlice,
     withdrawalRequests: withdrawalRequestSlice,
+    learning: learningSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -21,6 +21,11 @@ function Configuration() {
     subTier2Price: 0,
     subTier3Price: 0,
     subTier4Price: 0,
+    learningOffer: {
+      description: '',
+      discount: 0,
+      title: '',
+    },
   });
 
   useEffect(() => {
@@ -39,6 +44,20 @@ function Configuration() {
 
     setConfig((prev) => {
       return { ...prev, [e.target.name]: Number(e.target.value) };
+    });
+  };
+
+  const handleLearningOfferChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setConfig((prev) => {
+      return {
+        ...prev,
+        learningOffer: {
+          ...prev.learningOffer,
+          [e.target.name]: e.target.value,
+        },
+      };
     });
   };
 
@@ -66,7 +85,7 @@ function Configuration() {
   };
 
   return (
-    <div className="bg-white w-full h-full rounded-xl">
+    <div className="bg-white w-full h-fit pb-6 rounded-xl">
       <p className="text-2xl p-2">App Configuration</p>
       <div className="max-w-[80%] m-auto mt-10">
         <div className="bg-bgGrey p-4 rounded-xl flex flex-col gap-4">
@@ -116,6 +135,31 @@ function Configuration() {
               label="Mavian tier price (in ₹)"
             />
           </div>
+          <p className="text-xl underline mt-3">Learning Offer</p>
+          <div className="grid grid-cols-2 gap-4">
+            <Input
+              handleChange={handleLearningOfferChange}
+              name="discount"
+              value={config.learningOffer.discount}
+              label="Discount (in %)"
+            />
+            <Input
+              handleChange={handleLearningOfferChange}
+              name="title"
+              value={config.learningOffer.title}
+              label="Banner title (max 40 char)"
+              type="text"
+              max={40}
+            />
+            <Input
+              handleChange={handleLearningOfferChange}
+              name="description"
+              value={config.learningOffer.description}
+              label="Banner desc. (max 150 char)"
+              type="text"
+              max={150}
+            />
+          </div>
         </div>
 
         <button
@@ -134,11 +178,20 @@ function Configuration() {
 type InputProps = {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
-  value: number;
+  value: number | string;
   label: string;
+  type?: string;
+  max?: number;
 };
 
-const Input: React.FC<InputProps> = ({ handleChange, name, value, label }) => {
+const Input: React.FC<InputProps> = ({
+  handleChange,
+  name,
+  value,
+  label,
+  type = 'number',
+  max
+}) => {
   return (
     <div className=" relative ">
       <label htmlFor="name-with-label" className="text-gray-700">
@@ -146,12 +199,14 @@ const Input: React.FC<InputProps> = ({ handleChange, name, value, label }) => {
       </label>
       <input
         onChange={(e) => handleChange(e)}
-        type="number"
+        type={type}
         id="name-with-label"
         className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
         name={name}
         placeholder="Please enter a value"
         value={value}
+        max={type === 'number' ? max : undefined}
+        maxLength={type === 'text' ? max : undefined}
       />
     </div>
   );

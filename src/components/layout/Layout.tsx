@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom';
 import SideNav from '../navbar/SideNav';
 import TopNav from '../navbar/TopNav';
 
@@ -10,7 +9,6 @@ function Layout() {
         </div>
         <div className="bg-bgGrey w-full h-screen">
           <TopNav />
-          <Outlet />
         </div>
       </div>
   );
