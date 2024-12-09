@@ -42,11 +42,17 @@ export default function EquipmentList({ setSelectedEquipment }: Props) {
   );
 
   const handlePageChange = (changedPage: number) => {
-    dispatch(getEquipmentsAction({ page: changedPage, limit }));
+    dispatch({
+      type: getEquipmentsAction.type,
+      payload: { page: changedPage, limit },
+    });
   };
 
   const handleLimitChange = (value: number) => {
-    dispatch(getEquipmentsAction({ page: 1, limit: value }));
+    dispatch({
+      type: getEquipmentsAction.type,
+      payload: { page: 1, limit: value },
+    });
   };
 
   const handleOpenPdf = (url: string) => {

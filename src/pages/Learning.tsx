@@ -19,6 +19,8 @@ function Learning() {
 
   const learningData = useSelector((store: RootState) => store.learning);
 
+  // @ts-ignore
+  // eslint-disable-next-line
   const [currentSection, setCurrentSection] = useState<'video' | 'playlist'>(
     'video'
   );
