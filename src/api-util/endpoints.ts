@@ -28,6 +28,7 @@ const approval = {
 const users = {
   fetchAll: '/useraccount',
   update: '/useraccount',
+  downloadxls: '/useraccount/xls'
 };
 
 const flagged = {
