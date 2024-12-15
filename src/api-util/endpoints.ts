@@ -38,6 +38,7 @@ const flagged = {
 };
 const auth = {
   login: '/auth/admin-login',
+  passwordReset: '/auth/reset-password'
 };
 
 const appConstants = {

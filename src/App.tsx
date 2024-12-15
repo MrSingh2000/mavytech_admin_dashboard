@@ -18,6 +18,7 @@ import Configuration from './pages/Configuration';
 import 'primereact/resources/themes/saga-green/theme.css';
 import 'primereact/resources/primereact.min.css';
 import Learning from './pages/Learning';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
           <Route path="config" Component={Configuration} />
           <Route path="learning" Component={Learning} />
         </Route>
+        <Route path="/reset-password" Component={ResetPassword} />
         <Route path="*" Component={Notfound} />
       </Routes>
 
