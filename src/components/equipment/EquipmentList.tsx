@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { EquipmentType } from '../../types';
 import { Accordion, AccordionTab } from 'primereact/accordion';
@@ -44,14 +44,22 @@ export default function EquipmentList({ setSelectedEquipment, handleFormScroll }
 
   const [activeTabIndex, setActiveTabIndex] = useState<number | null>();
 
-  const handlePageChange = (changedPage: number) => {
+  useEffect(() => {
     setActiveTabIndex(null);
-    dispatch(getEquipmentsAction({ page: changedPage, limit }));
+  }, [currentPage]);
+
+  const handlePageChange = (changedPage: number) => {
+    dispatch({
+      type: getEquipmentsAction.type,
+      payload: { page: changedPage, limit },
+    });
   };
 
   const handleLimitChange = (value: number) => {
-    setActiveTabIndex(null);
-    dispatch(getEquipmentsAction({ page: 1, limit: value }));
+    dispatch({
+      type: getEquipmentsAction.type,
+      payload: { page: 1, limit: value },
+    });
   };
 
   const handleOpenPdf = (url: string) => {
@@ -71,7 +79,7 @@ export default function EquipmentList({ setSelectedEquipment, handleFormScroll }
   return (
     <div className="container mx-auto p-4 bg-gray-50 mt-8">
       <div className="mb-6 flex justify-between items-center gap-2">
-        <h1 className="text-xl font-bold ms-1 md:text-2xl">Equipment List</h1>
+        <h1 className="text-xl font-bold ms-1 md:text-2xl ">Equipment List</h1>
         <div className="flex gap-2 items-center">
           <label htmlFor="limit" className="text-sm font-medium">
             Items per page:{' '}
@@ -90,7 +98,7 @@ export default function EquipmentList({ setSelectedEquipment, handleFormScroll }
           multiple={false}
           activeIndex={activeTabIndex}
           onTabChange={(e) => setActiveTabIndex(e.index as number | null)}
-          className="w-full space-y-4"
+          className="w-full divide-y divide-gray-200"
         >
           {equipments.map((equipment, index) => (
             <AccordionTab
@@ -113,64 +121,77 @@ export default function EquipmentList({ setSelectedEquipment, handleFormScroll }
                       {equipment.name}
                     </span>
                   </div>
-                  <span className="text-sm text-gray-600 bg-blue-100 px-2 py-1 rounded-full">
-                    {equipment.models.length} models
+                  <span className="text-sm text-white bg-success px-2 py-1 rounded-full">
+                    {equipment.models.length} <span className="hidden md:inline">models</span>
                   </span>
                 </div>
               }
             >
-              <Card className="mt-2 rounded-md shadow-md max-h-80 overflow-y-scroll">
+              <Card className="mt-2 rounded-lg shadow-md mb-8 max-h-80 overflow-y-auto">
                 <div className="p-4">
-                  <p className="text-gray-600 mb-4">{equipment.description}</p>
-                  <div className="grid grid-cols-5 gap-4 font-semibold mb-2 px-4 py-2 bg-gray-100 rounded-md">
-                    <div>Model</div>
-                    <div>User Manual</div>
-                    <div>Service Manual</div>
-                    <div className="col-span-2">Actions</div>
+                  <div className="grid grid-cols-5 md:grid-cols-6 font-semibold mb-2 px-4 py-2 bg-success20percent text-black rounded-md">
+                    <div className='md:col-span-1'>Image</div>
+                    <div className='md:col-span-2'>Model</div>
+                    <div className='md:col-span-1 text-center'>User Manual</div>
+                    <div className='md:col-span-1 text-center'>Service Manual</div>
+                    <div className="md:col-span-1 text-center">Actions</div>
                   </div>
                   {equipment.models.map((model) => (
                     <div
                       key={model._id}
-                      className="grid grid-cols-5 gap-4 border-b last:border-b-0 py-3 px-4 items-center"
+                      className="grid grid-cols-5 md:grid-cols-6 gap-4 border-b last:border-b-0 py-3 px-4 items-center"
                     >
-                      <div className="font-medium">{model.machineModel}</div>
-                      <div>
+                      <div className="md:col-span-1">
+                      {model.image ? (
+                      <img
+                        src={createUrl(model.image)}
+                        alt={model.machineModel}
+                        className="rounded-sm md:rounded-md w-[40px] md:w-[50px] h-[40px] md:h-[50px]"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-gray-200 rounded-md flex items-center justify-center">
+                        <FaImage className="text-gray-400" size={24} />
+                      </div>
+                    )}
+                      </div>
+                      <div className="font-medium md:col-span-2">{model.machineModel}</div>
+                      <div className='text-center md:col-span-1'>
                         {model.userManual ? (
                           <Button
                             icon={<FaDownload className="text-white" />}
                             onClick={() =>
                               handleOpenPdf(createUrl(model.userManual))
                             }
-                            className="p-0 w-8 h-8 bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700"
+                            className="p-0 w-8 h-8 bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700"
                           />
                         ) : (
-                          <div className="flex items-center text-yellow-600">
+                          <div className="flex justify-center items-center text-yellow-500">
                             <IoWarning size={25} />
                           </div>
                         )}
                       </div>
-                      <div>
+                      <div className='text-center md:col-span-1'>
                         {model.serviceManual ? (
                           <Button
                             icon={<FaDownload className="text-white" />}
                             onClick={() =>
                               handleOpenPdf(createUrl(model.serviceManual))
                             }
-                            className="p-0 w-8 h-8 bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700"
+                            className="p-0 w-8 h-8 bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700"
                           />
                         ) : (
-                          <div className="flex items-center text-yellow-600">
+                          <div className="flex items-center justify-center text-yellow-500">
                             <IoWarning size={25} />
                           </div>
                         )}
                       </div>
-                      <div className="flex space-x-2 col-span-2">
+                      <div className="flex justify-center space-x-2 col-span-1">
                         <Button
                           icon={<FaPencilAlt className="text-white" />}
                           onClick={() =>
                             handleEdit({
                               name: equipment?.name,
-                              description: equipment?.description,
+                              description: equipment?.description || '',
                               image: equipment?.image,
                               _id: model?._id,
                               machineModel: model?.machineModel,
@@ -223,8 +244,8 @@ export default function EquipmentList({ setSelectedEquipment, handleFormScroll }
                 onClick={() => handlePageChange(page)}
                 className={`p-0 w-8 h-8 ${
                   currentPage === page
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white text-blue-600 border-blue-600'
+                    ? 'bg-success text-white'
+                    : 'bg-white text-black border-black'
                 }`}
               />
             );

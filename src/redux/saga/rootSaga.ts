@@ -31,6 +31,17 @@ import {
   watchGetWithdrawalRequestsSaga,
   watchUpdateWithdrawalRequestsSaga,
 } from './withdrawalRequestsSaga';
+import {
+  watchGetLearningSaga,
+  watchAddPlaylistSaga,
+  watchAddVideoSaga,
+  watchRemovePlaylistSaga,
+  watchRemoveVideoSaga,
+  watchAddVideoToPlaylistSaga,
+  watchRemoveVideoFromPlaylistSaga,
+  watchGetLearningPlaylistSaga,
+  watchGetLearningVideosSaga,
+} from './learningSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -57,5 +68,14 @@ export default function* rootSaga() {
     fork(watchUpdateAppConstantsSaga),
     fork(watchGetWithdrawalRequestsSaga),
     fork(watchUpdateWithdrawalRequestsSaga),
+    fork(watchGetLearningSaga),
+    fork(watchAddPlaylistSaga),
+    fork(watchAddVideoSaga),
+    fork(watchRemovePlaylistSaga),
+    fork(watchRemoveVideoSaga),
+    fork(watchAddVideoToPlaylistSaga),
+    fork(watchRemoveVideoFromPlaylistSaga),
+    fork(watchGetLearningPlaylistSaga),
+    fork(watchGetLearningVideosSaga),
   ]);
 }

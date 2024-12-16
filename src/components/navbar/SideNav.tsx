@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { MdOutlineApproval } from 'react-icons/md';
 import { FaRegFlag, FaRegUserCircle } from "react-icons/fa";
 import { FcDataConfiguration } from "react-icons/fc";
+import { MdOutlineOndemandVideo } from "react-icons/md";
 
 type NavItemType = {
   icon: ReactElement;
@@ -54,6 +55,11 @@ function SideNav() {
       icon: <TbPigMoney/>,
       title: 'Referral Points',
       navLink: '/referrals',
+    },
+    {
+      icon: <MdOutlineOndemandVideo />,
+      title: 'Learning',
+      navLink: '/learning',
     },
     {
       icon: <FcDataConfiguration />,

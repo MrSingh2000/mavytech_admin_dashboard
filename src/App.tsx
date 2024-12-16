@@ -1,7 +1,6 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Layout from './components/layout/Layout';
 import Equipment from './pages/Equipment';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,23 +15,12 @@ import Notfound from './pages/Notfound';
 import Loader from './components/common/Loader';
 import ReferalRefund from './pages/ReferalRefund';
 import Configuration from './pages/Configuration';
-import 'primereact/resources/themes/saga-green/theme.css'; 
+import 'primereact/resources/themes/saga-green/theme.css';
 import 'primereact/resources/primereact.min.css';
+import Learning from './pages/Learning';
 
 function App() {
-
   return (
-    // <><Routes>
-    //     <Route
-    //     path="/"
-    //      Component={() => (
-    //       <Layout />
-    //   )}  >
-    //     <Route path="allusers" Component={UserList} />
-    //     </Route>
-    //     </Routes>
-    
-    // </>
     <>
       <ToastContainer
         position="top-right"
@@ -47,23 +35,18 @@ function App() {
         theme="light"
       />
       <Routes>
-         <Route path="/login" Component={Login} />
-        <Route
-          path="/"
-          Component={() => (
-            <AuthenticatedRoute><Layout /></AuthenticatedRoute>
-              
-          )}
-        >
+        <Route path="/login" Component={Login} />
+        <Route path="/" element={<AuthenticatedRoute />}>
           <Route path="" Component={Home} />
           <Route path="equipment" Component={Equipment} />
           <Route path="advertisement" Component={Advertisement} />
-          <Route path="documents" Component={Documents} />
+          <Route path="documents" element={<Documents />} />
           <Route path="approval" Component={Approval} />
           <Route path="flagged" Component={Flagged} />
           <Route path="allusers" Component={UserList} />
           <Route path="referrals" Component={ReferalRefund} />
           <Route path="config" Component={Configuration} />
+          <Route path="learning" Component={Learning} />
         </Route>
         <Route path="*" Component={Notfound} />
       </Routes>

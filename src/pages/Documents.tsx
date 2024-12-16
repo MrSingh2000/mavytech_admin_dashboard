@@ -9,6 +9,7 @@ function Documents() {
 
   useEffect(() => {
     dispatch({ type: getDocumentsAction.type });
+    console.log('rendered')
   }, []);
 
   return (

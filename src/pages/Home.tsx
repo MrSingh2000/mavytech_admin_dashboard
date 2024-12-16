@@ -439,7 +439,7 @@ export default function Home() {
       >
         <h2 className="mb-4 text-xl font-semibold text-gray-800">Active Users</h2>
         <div className="h-80">
-          <Line data={chartData} options={chartOptions} />
+          <Line data={chartData} options={chartOptions as any} />
         </div>
       </motion.div>
 

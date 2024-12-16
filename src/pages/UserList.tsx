@@ -7,23 +7,61 @@ import { RootState } from '../redux/store';
 import countriesData from '../components/addAdvertisements/countries.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsersAction, updateUserAction } from '../redux/slices/usersSlice';
-import { createUrl } from '../helper/functions';
+import { createUrl, showToast } from '../helper/functions';
 import { UserType } from '../types';
+import { FaDownload } from 'react-icons/fa6';
+import axiosInstance from '@/api-util/api';
+import endpoints from '@/api-util/endpoints';
 
 function UserList() {
   const dispatch = useDispatch();
   const users = useSelector((state: RootState) => state.users.allUser);
+
+  const downloadExcel = async () => {
+    try {
+      showToast('Started downloading, please wait', 'info');
+      const response = await axiosInstance.get(endpoints.users.downloadxls, {
+        responseType: 'blob',
+      });
+      // Create a URL for the blob
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+
+      // Create an anchor element to trigger the download
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'data.xlsx'; // Set the desired file name
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      // Cleanup the blob URL
+      window.URL.revokeObjectURL(url);
+      showToast('Download successfull', 'success');
+    } catch (error: any) {
+      console.log('Error while downloading xls: ', error);
+      showToast('Error while downloading data', 'error');
+    }
+  };
 
   useEffect(() => {
     dispatch(getUsersAction());
   }, [dispatch]);
 
   return (
-    <div className="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
+    <div className="overflow-hidden w-full">
+      <button
+        onClick={downloadExcel}
+        type="button"
+        className="gap-2 m-4 py-2 px-4 flex justify-center items-center  bg-green-500 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-green-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full"
+      >
+        <FaDownload />
+        Download xls
+      </button>
+
       <div
         className="inline-block min-w-full overflow-hidden rounded-lg shadow"
         style={{
-          height: '30rem',
+          height: '70vh',
           overflowY: 'scroll',
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',

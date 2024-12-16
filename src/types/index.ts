@@ -1,4 +1,4 @@
-import { SUBSCRIPTION_TIER } from "@/enum";
+import { SUBSCRIPTION_TIER } from '@/enum';
 
 export type APIResponse<T = any> = {
   message?: string;
@@ -19,6 +19,7 @@ export type EquipmentType = {
 export type ModelType = {
   _id: string;
   machineModel: string;
+  image: string;
   userManual: string;
   serviceManual: string;
 };
@@ -155,6 +156,11 @@ export type AppConstantsType = {
   subTier2Price: number;
   subTier3Price: number;
   subTier4Price: number;
+  learningOffer: {
+    discount: number;
+    title: string;
+    description: string;
+  };
 };
 
 export type WithdrawalTransactionType = {
@@ -177,4 +183,31 @@ export type WithdrawalRequestType = {
   total: number;
   updatedAt: string;
   createdAt: string;
+};
+
+export type LearningVideo = {
+  _id: string;
+  title: string;
+  description: string;
+  paid: boolean;
+  price: number;
+  link: string;
+  equipmentRelated: string;
+  modelRelated: string;
+  buyers: string[];
+  reviews: any[]; // not being used here so type is not defined
+  updatedAt: string;
+};
+
+export type LearningPlaylist = {
+  _id: string;
+  title: string;
+  description: string;
+  paid: boolean;
+  price: number;
+  videos: string[];
+  equipmentRelated: string;
+  modelRelated: string;
+  buyers: string[];
+  updatedAt: string;
 };

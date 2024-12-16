@@ -8,7 +8,7 @@ function Loader() {
   return (
     isLoading && (
       <div className="absolute w-screen h-screen top-0 flex justify-center items-center">
-        <div className="loadingio-spinner-double-ring-2by998twmg8">
+        <div className="loadingio-spinner-double-ring-2by998twmg8 bg-transparent">
           <div className="ldio-yzaezf3dcmj">
             <div></div>
             <div></div>

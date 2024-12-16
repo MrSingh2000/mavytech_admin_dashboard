@@ -9,7 +9,6 @@ export const setLocalStorageItem = (item: string, value: string): void => {
 };
 
 export const clearLocalStorage = () => {
-  console.log('clearing');
   localStorage.clear();
 };
 
@@ -40,7 +39,13 @@ export const showToast = (
 };
 
 export const createUrl = (baseUrl: string): string => {
-  console.log('base url: ', baseUrl);
   if (baseUrl.includes('http')) return baseUrl;
   return `${import.meta.env.VITE_SERVER_PORT}${baseUrl}`;
+};
+
+
+export const fetchLearningThumbnail = (id: string): string => {
+  if (!id) return '';
+
+  return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
 };

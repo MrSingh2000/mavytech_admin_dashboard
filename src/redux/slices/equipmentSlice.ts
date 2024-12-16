@@ -21,7 +21,7 @@ const equipmentSlice = createSlice({
       state.limit = action.payload.limit;
       state.totalPages = action.payload.totalPages;
     },
-    getEquipmentsAction: (state, action: PayloadAction<{ page: number; limit: number }>) => {},
+    getEquipmentsAction: () => {},
     createEquipmentAction: () => {},
     deleteEquipmentAction: () => {},
   },
