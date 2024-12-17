@@ -16,11 +16,9 @@ function EquipmentForm({ selectedEquipment, setSelectedEquipment }: Props) {
   const [formData, setFormData] = useState<{
     name: string;
     machineModel: string;
-    description: string;
   }>({
     name: '',
-    machineModel: '',
-    description: '',
+    machineModel: ''
   });
 
   const [files, setFiles] = useState<{
@@ -47,7 +45,6 @@ function EquipmentForm({ selectedEquipment, setSelectedEquipment }: Props) {
     setFormData({
       name: selectedEquipment?.name ?? '',
       machineModel: selectedEquipment?.machineModel ?? '',
-      description: selectedEquipment?.description ?? '',
     });
   }, [selectedEquipment]);
 
@@ -72,7 +69,6 @@ function EquipmentForm({ selectedEquipment, setSelectedEquipment }: Props) {
     // Append JSON data
     data.append('name', formData.name);
     data.append('machineModel', formData.machineModel);
-    data.append('description', formData.description);
 
     // Append file data
     if (files.image) data.append('image', files.image);
@@ -88,6 +84,17 @@ function EquipmentForm({ selectedEquipment, setSelectedEquipment }: Props) {
       method: selectedEquipment ? 'put' : 'post',
       data,
     });
+
+    setFormData({
+      name: '',
+      machineModel: ''
+    });
+    setFiles({
+      image: null,
+      userManual: null,
+      serviceManual: null,
+    });
+    handleClearInput();
 
     dispatch({ type: getEquipmentsAction.type });
   };
@@ -120,26 +127,10 @@ function EquipmentForm({ selectedEquipment, setSelectedEquipment }: Props) {
             value={formData.machineModel}
           />
 
-          <label className="text-gray-700 flex-grow" htmlFor="name">
-            <label htmlFor="required-email" className="text-gray-700">
-              Description
-              <span className="text-red-500 required-dot">*</span>
-            </label>
-            <textarea
-              className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
-              placeholder="Machine description here"
-              name="description"
-              rows={5}
-              cols={40}
-              onChange={(e) => handleChange(e)}
-              value={formData.description}
-            ></textarea>
-          </label>
-
           <div className="w-full max-w-60">
             <label
               htmlFor="image"
-              className="block text-sm text-gray-500 dark:text-gray-300"
+              className="block text-sm text-gray-700 dark:text-gray-300"
             >
               Machine image{' '}
               <span className="text-xs text-success">
@@ -160,7 +151,7 @@ function EquipmentForm({ selectedEquipment, setSelectedEquipment }: Props) {
           <div className="w-full max-w-60">
             <label
               htmlFor="image"
-              className="block text-sm text-gray-500 dark:text-gray-300"
+              className="block text-sm text-gray-700 dark:text-gray-300"
             >
               User manual{' '}
               <span className="text-xs text-success">
@@ -181,7 +172,7 @@ function EquipmentForm({ selectedEquipment, setSelectedEquipment }: Props) {
           <div className="w-full max-w-60">
             <label
               htmlFor="image"
-              className="block text-sm text-gray-500 dark:text-gray-300"
+              className="block text-sm text-gray-700 dark:text-gray-300"
             >
               Service manual{' '}
               <span className="text-xs text-success">
