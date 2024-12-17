@@ -19,6 +19,7 @@ export type EquipmentType = {
 export type ModelType = {
   _id: string;
   machineModel: string;
+  image: string;
   userManual: string;
   serviceManual: string;
 };
