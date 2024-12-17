@@ -85,6 +85,17 @@ function EquipmentForm({ selectedEquipment, setSelectedEquipment }: Props) {
       data,
     });
 
+    setFormData({
+      name: '',
+      machineModel: ''
+    });
+    setFiles({
+      image: null,
+      userManual: null,
+      serviceManual: null,
+    });
+    handleClearInput();
+
     dispatch({ type: getEquipmentsAction.type });
   };
 
