@@ -14,9 +14,7 @@ type Props = {
   >;
 };
 
-function AdvertisementForm({
-  selectedAdvertisement,
-}: Props) {
+function AdvertisementForm({ selectedAdvertisement }: Props) {
   const dispatch = useDispatch();
   const initialFormData = {
     title: '',
@@ -107,9 +105,6 @@ function AdvertisementForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    
-
     if (isEditing && selectedAdvertisement && selectedCountries.length != 0) {
       const updatedData = {
         targetCity: selectedStates,
@@ -122,7 +117,12 @@ function AdvertisementForm({
         payload: { data: updatedData, id: selectedAdvertisement._id },
       });
     } else {
-      if (!file || !formData.title || !formData.url || !formData.targetCountry) {
+      if (
+        !file ||
+        !formData.title ||
+        !formData.url ||
+        !formData.targetCountry
+      ) {
         alert('Please fill the form properly.');
         return;
       }
@@ -206,13 +206,14 @@ function AdvertisementForm({
           <div className="relative">
             <label>Target Countries</label>
             <MultiSelect
+              panelStyle={{ padding: '10px', backgroundColor: '#fafafa'}}
+              itemClassName='gap-2 p-1'
               value={selectedCountries}
               onChange={(e) => setSelectedCountries(e.value)}
               options={countryOptions}
               optionLabel="label"
               filter
               placeholder="Select Countries"
-              maxSelectedLabels={5}
               display="chip"
               className="rounded-lg mt-2 overflow-ellipsis border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent text-sm"
             />
@@ -223,6 +224,8 @@ function AdvertisementForm({
           <div className="relative">
             <label>Target States</label>
             <MultiSelect
+              panelStyle={{ padding: '10px', backgroundColor: '#fafafa'}}
+              itemClassName='gap-2 p-1'
               value={selectedStates}
               onChange={(e) => setSelectedStates(e.value)}
               options={stateOptions}

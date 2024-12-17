@@ -190,7 +190,7 @@ const ListRow = ({ data }: ItemProps) => {
     <tr>
       <td className="px-5 py-5  text-sm bg-white border-b border-gray-200">
         <p className="text-gray-900 whitespace-no-wrap text-center">
-          {formatDate(data.createdAt)}
+          {formatDate(data?.createdAt)}
         </p>
       </td>
       <td className=" justify-center px-5 py-5 text-sm bg-white border-b border-gray-200">
@@ -202,28 +202,28 @@ const ListRow = ({ data }: ItemProps) => {
       </td>
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
         <p className="text-gray-900 whitespace-no-wrap text-center">
-          {data.postModel === FlaggedModels.SERVICES
-            ? (data.postDetails as ServicesType).postedBy?.name
-            : data.postModel === FlaggedModels.SALES
-            ? (data.postDetails as SalesType).postedBy?.name
-            : (data.postDetails as NewsType).postedBy?.name}
+          {data?.postModel === FlaggedModels.SERVICES
+            ? (data?.postDetails as ServicesType)?.postedBy?.name
+            : data?.postModel === FlaggedModels.SALES
+            ? (data?.postDetails as SalesType)?.postedBy?.name
+            : (data?.postDetails as NewsType)?.postedBy?.name}
         </p>
       </td>
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
         <p className="text-gray-900 whitespace-no-wrap text-center">
-          {data.category}
+          {data?.category}
         </p>
       </td>
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
         <p className="text-gray-900 whitespace-no-wrap text-center">
-          {data.reportedBy.name}
+          {data?.reportedBy?.name}
         </p>
       </td>
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200 justify-center align-middle items-center">
         <div className="flex justify-center gap-2">
           <button
             onClick={() =>
-              dispatch({ type: rejectFlaggedAction.type, payload: data._id })
+              dispatch({ type: rejectFlaggedAction.type, payload: data?._id })
             }
             type="button"
             className="flex justify-center items-center  bg-green-600 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-green-200 text-white transition ease-in  duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 w-8 h-8 rounded-lg "
@@ -233,7 +233,7 @@ const ListRow = ({ data }: ItemProps) => {
 
           <button
             onClick={() =>
-              dispatch({ type: acceptFlaggedAction.type, payload: data._id })
+              dispatch({ type: acceptFlaggedAction.type, payload: data?._id })
             }
             type="button"
             className="flex justify-center items-center  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white  transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 w-8 h-8 rounded-lg "
@@ -254,10 +254,10 @@ const ListRow = ({ data }: ItemProps) => {
           setVisible(false);
         }}
       >
-        {data.postModel === FlaggedModels.SERVICES ? (
+        {data?.postModel === FlaggedModels.SERVICES ? (
           <div className="flex flex-col justify-center align-middle items-center rounded-full">
             <Galleria
-              value={(data.postDetails as ServicesType).imageUrl.map((url) =>
+              value={(data?.postDetails as ServicesType)?.imageUrl.map((url) =>
                 createUrl(url)
               )}
               item={itemTemplate}
@@ -274,21 +274,21 @@ const ListRow = ({ data }: ItemProps) => {
             />
 
             <p className="font-bold text-black text-base text-left w-full my-2">
-              {data.postDetails.title}
+              {data?.postDetails.title}
             </p>
             <p className="text-black text-xs text-left  w-full">
               {' '}
               <i className="font-semibold"> Equipment Name: </i>
               <p className="text-gray-700 text-sm  m-0">
                 {' '}
-                {(data.postDetails as ServicesType).equipmentName}
+                {(data?.postDetails as ServicesType)?.equipmentName}
               </p>
             </p>
             <p className="text-black text-xs text-left w-full">
               Equipement Model:{' '}
               <i className="text-gray-700">
                 {' '}
-                {(data.postDetails as SalesType).equipmentModel}
+                {(data?.postDetails as SalesType)?.equipmentModel}
               </i>
             </p>
             <p className="text-xs font-semibold mt-2 w-full text-left">
@@ -296,18 +296,18 @@ const ListRow = ({ data }: ItemProps) => {
             </p>
             <hr className="font-extrabold mb-2 w-full" />
             <p className="text-left w-full text-sm mb-2">
-              {data.postDetails.description}
+              {data?.postDetails?.description}
             </p>
             <hr className="font-extrabold m-2 w-full" />
             <div className="flex flex-row justify-between text-xs  w-full">
               <p className="font-semibold">Created on:</p>
-              <p>{formatDate((data.postDetails as ServicesType).createdAt)}</p>
+              <p>{formatDate((data?.postDetails as ServicesType)?.createdAt)}</p>
             </div>
           </div>
-        ) : data.postModel === FlaggedModels.SALES ? (
+        ) : data?.postModel === FlaggedModels.SALES ? (
           <div className="flex flex-col justify-center align-middle items-center rounded-full">
             <Galleria
-              value={(data.postDetails as SalesType).imageUrl.map((url) =>
+              value={(data?.postDetails as SalesType)?.imageUrl.map((url) =>
                 createUrl(url)
               )}
               item={itemTemplate}
@@ -324,32 +324,32 @@ const ListRow = ({ data }: ItemProps) => {
             />
 
             <p className="font-bold text-black text-lg text-left w-full">
-              {(data.postDetails as SalesType).price}
+              {(data?.postDetails as SalesType)?.price}
             </p>
             <p className="font-bold text-black text-base text-left w-full">
-              {data.postDetails.title}
+              {data?.postDetails?.title}
             </p>
             <p className="text-black text-xs text-left w-full">
               {' '}
-              Equipment Name: {(data.postDetails as SalesType).equipmentName}
+              Equipment Name: {(data?.postDetails as SalesType)?.equipmentName}
             </p>
             <p className="text-black text-xs text-left w-full">
-              Equipement Model: {(data.postDetails as SalesType).equipmentModel}
+              Equipement Model: {(data?.postDetails as SalesType)?.equipmentModel}
             </p>
             <p className="text-left w-full my-2">
-              {data.postDetails.description}
+              {data?.postDetails?.description}
             </p>
             <hr className="font-bold m-2 w-full" />
             <div className="flex flex-row justify-between  w-full">
               {' '}
               <p>Created on</p>
-              <p>{formatDate((data.postDetails as SalesType).createdAt)}</p>
+              <p>{formatDate((data?.postDetails as SalesType)?.createdAt)}</p>
             </div>
           </div>
         ) : (
           <div className="flex flex-col justify-center align-middle items-center rounded-full">
             <img
-              src={createUrl((data.postDetails as NewsType).imageUrl)}
+              src={createUrl((data?.postDetails as NewsType)?.imageUrl)}
               alt="image"
               style={{
                 width: '250px',
@@ -362,12 +362,12 @@ const ListRow = ({ data }: ItemProps) => {
 
             <p className="font-bold text-black text-lg text-left w-full">{}</p>
             <p className="font-bold text-black text-base text-left w-full">
-              {data.postDetails.title}
+              {data?.postDetails?.title}
             </p>
 
-            <p className="text-left w-full">{data.postDetails.description}</p>
+            <p className="text-left w-full">{data?.postDetails?.description}</p>
             <div className="flex flex-row gap-4 justify-start w-full my-2">
-              {(data.postDetails as NewsType).tags.map((item) => (
+              {(data?.postDetails as NewsType)?.tags.map((item) => (
                 <Tag className="bg-green-600" value={item} rounded></Tag>
               ))}
             </div>
@@ -375,7 +375,7 @@ const ListRow = ({ data }: ItemProps) => {
             <hr className="font-bold m-2 w-full" />
             <div className="flex flex-row justify-between w-full">
               <p>Created on</p>
-              <p>{formatDate((data.postDetails as NewsType).createdAt)}</p>
+              <p>{formatDate((data?.postDetails as NewsType)?.createdAt)}</p>
             </div>
           </div>
         )}

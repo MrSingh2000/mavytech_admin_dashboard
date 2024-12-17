@@ -6,7 +6,7 @@
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #00B07426 #ffffff;
+  scrollbar-color: #00b07426 #ffffff;
 }
 
 /* Chrome, Edge, and Safari */
@@ -19,7 +19,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #00B07426;
+  background-color: #00b07426;
   border-radius: 40px;
   border: 0px solid #ffffff;
 }
@@ -32,6 +32,48 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
+}
+
+/* React Prime multiselect styles */
+.p-multiselect-select-all::after {
+  content: ' Select All'; /* Add your desired text here */
+  font-size: 10px; /* Adjust font size */
+  color: #333; /* Set text color */
+  margin-left: 8px; /* Add spacing between checkbox and text */
+  display: inline-block; /* Ensures text appears inline */
+  vertical-align: middle; /* Align text vertically with checkbox */
+  font-weight: bolder;
+}
+
+.p-multiselect-panel input[type='checkbox'] {
+  background-color: red;
+  color: green;
+}
+
+.p-multiselect-panel .p-multiselect-filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.p-multiselect-panel .p-multiselect-filter-container svg {
+  position: relative;
+  margin: auto;
+  left: -20px;
+}
+
+.p-multiselect-header {
+  gap: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+}
+
+.p-multiselect-token {
+  padding: 4px 8px;
+  gap: 4px;
+  margin: 0 3px;
 }
