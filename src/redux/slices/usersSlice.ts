@@ -21,6 +21,8 @@ const usersSlice = createSlice({
 
     getUsersAction: () => {},
     updateUserAction: () => {},
+    toggleUserDisableAction: () => {},
+    deleteUserAction: () => {},
   },
 });
 
@@ -28,6 +30,8 @@ export const {
   getUsersAction,
   updateUserAction,
   setUsers,
+  deleteUserAction,
+  toggleUserDisableAction,
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

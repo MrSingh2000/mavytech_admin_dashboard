@@ -77,3 +77,10 @@ input[type='number'] {
   gap: 4px;
   margin: 0 3px;
 }
+
+/* dropdown styles */
+.p-dropdown .p-dropdown-clear-icon {
+  position: relative;
+  top: 2px;
+  right: 0;
+}

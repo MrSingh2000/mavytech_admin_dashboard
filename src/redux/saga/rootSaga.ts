@@ -21,7 +21,12 @@ import {
   watchGetFlaggedSaga,
   watchRejectFlaggedSaga,
 } from './flaggedSaga';
-import { watchGetUsersSaga, watchUpdateUserSaga } from './usersSaga';
+import {
+  watchDeleteUserSaga,
+  watchDisableUserSaga,
+  watchGetUsersSaga,
+  watchUpdateUserSaga,
+} from './usersSaga';
 import { watchUserLogin } from './authSaga';
 import {
   watchGetAppConstantsSaga,
@@ -77,5 +82,7 @@ export default function* rootSaga() {
     fork(watchRemoveVideoFromPlaylistSaga),
     fork(watchGetLearningPlaylistSaga),
     fork(watchGetLearningVideosSaga),
+    fork(watchDisableUserSaga),
+    fork(watchDeleteUserSaga),
   ]);
 }

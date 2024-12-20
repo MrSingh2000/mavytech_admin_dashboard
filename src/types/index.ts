@@ -107,6 +107,14 @@ export type UserType = {
   state: string;
   country: string;
   createdAt: string;
+  updatedAt: string;
+  subscriptionStatus?: SUBSCRIPTION_TIER;
+  subscriptionExpirationDate?: string;
+  following?: UserObjType[];
+  followers?: UserObjType[];
+  sentRequests?: UserObjType[];
+  recievedRequests?: UserObjType[];
+  accountDisabled?: boolean;
 };
 
 export type AdvertisementType = {

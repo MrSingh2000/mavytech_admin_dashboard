@@ -28,7 +28,8 @@ const approval = {
 const users = {
   fetchAll: '/useraccount',
   update: '/useraccount',
-  downloadxls: '/useraccount/xls'
+  downloadxls: '/useraccount/xls',
+  search: '/useraccount/search',
 };
 
 const flagged = {
@@ -38,7 +39,7 @@ const flagged = {
 };
 const auth = {
   login: '/auth/admin-login',
-  passwordReset: '/auth/reset-password'
+  passwordReset: '/auth/reset-password',
 };
 
 const appConstants = {
@@ -63,6 +64,11 @@ const learning = {
   userLearning: '/learning/user', // GET
 };
 
+const connect = {
+  toggleDisable: '/userconnect/disable',
+  deleteUser: '/userconnect/delete',
+};
+
 const endpoints = {
   equipment,
   document,
@@ -74,6 +80,7 @@ const endpoints = {
   appConstants,
   withdrawalRequest,
   learning,
+  connect,
 };
 
 export default endpoints;
