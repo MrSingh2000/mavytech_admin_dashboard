@@ -123,6 +123,7 @@ function Learning() {
 
   useEffect(() => {
     dispatch({ type: getLearningDataAction.type });
+    setCurrentSection('video');
   }, []);
 
   useEffect(() => {
