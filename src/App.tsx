@@ -19,6 +19,7 @@ import 'primereact/resources/themes/saga-green/theme.css';
 import 'primereact/resources/primereact.min.css';
 import Learning from './pages/Learning';
 import ResetPassword from './pages/ResetPassword';
+import Redirection from './pages/Redirection';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           <Route path="learning" Component={Learning} />
         </Route>
         <Route path="/reset-password" Component={ResetPassword} />
+        <Route path="/redirect" Component={Redirection} />
         <Route path="*" Component={Notfound} />
       </Routes>
 
