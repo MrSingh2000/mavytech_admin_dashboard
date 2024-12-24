@@ -6,6 +6,7 @@ import {
   setNewsFlags,
   setSalesFlags,
   setServicesFlags,
+  setUserFlags,
 } from '../slices/flaggedSlice';
 import { setLoading } from '../slices/loadingSlice';
 import axiosInstance from '../../api-util/api';
@@ -17,21 +18,26 @@ import { FlaggedModels, FlaggedType } from '../../types';
 // eslint-disable-next-line
 function* getAllFlags(): any {
   yield* withLoadingAndErrorHandling(function* (): any {
-      const response = yield call(axiosInstance.get, endpoints.flagged.fetchAll);
-      const data: FlaggedType[] = response.data.value;
-      yield put(
-        setServicesFlags(
-          data.filter((item) => item.postModel === FlaggedModels.SERVICES)
-        )
-      );
-      yield put(
-        setSalesFlags(
-          data.filter((item) => item.postModel === FlaggedModels.SALES)
-        )
-      );
-      yield put(
-        setNewsFlags(data.filter((item) => item.postModel === FlaggedModels.NEWS))
-      );
+    const response = yield call(axiosInstance.get, endpoints.flagged.fetchAll);
+    const data: FlaggedType[] = response.data.value;
+    yield put(
+      setServicesFlags(
+        data.filter((item) => item.postModel === FlaggedModels.SERVICES)
+      )
+    );
+    yield put(
+      setSalesFlags(
+        data.filter((item) => item.postModel === FlaggedModels.SALES)
+      )
+    );
+    yield put(
+      setNewsFlags(data.filter((item) => item.postModel === FlaggedModels.NEWS))
+    );
+    yield put(
+      setUserFlags(data.filter((item) => item.postModel === FlaggedModels.USER))
+    );
+
+    console.log('here')
   });
 }
 

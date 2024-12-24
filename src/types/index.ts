@@ -55,6 +55,7 @@ export enum FlaggedModels {
   SERVICES = 'Services',
   SALES = 'Sales',
   NEWS = 'News',
+  USER = 'User',
 }
 
 export type ServicesType = {
@@ -93,7 +94,7 @@ export type FlaggedType = {
   category: string;
   createdAt: string;
   updatedAt: string;
-  postDetails: ServicesType | NewsType | SalesType;
+  postDetails: ServicesType | NewsType | SalesType | UserType;
 };
 
 export type UserType = {
@@ -101,7 +102,10 @@ export type UserType = {
   name: string;
   email: string;
   dob: string;
-  phone: string;
+  phone: {
+    code: string;
+    number: string;
+  };
   imageUrl: string;
   role: string;
   state: string;

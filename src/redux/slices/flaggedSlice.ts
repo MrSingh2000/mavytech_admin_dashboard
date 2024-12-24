@@ -1,10 +1,11 @@
-import { createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { FlaggedType } from '../../types';
 
 type StateType = {
   services: FlaggedType[];
   sales: FlaggedType[];
   news: FlaggedType[];
+  users: FlaggedType[];
   selectedFlagged: FlaggedType | null;
 };
 
@@ -13,6 +14,7 @@ const initialState: StateType = {
   news: [],
   sales: [],
   services: [],
+  users: [],
 };
 
 const flaggedSlice = createSlice({
@@ -28,6 +30,9 @@ const flaggedSlice = createSlice({
     setNewsFlags: (state, action) => {
       state.news = action.payload;
     },
+    setUserFlags: (state, action) => {
+      state.users = action.payload;
+    },
     getFlagsAction: () => {},
     rejectFlaggedAction: () => {},
     acceptFlaggedAction: () => {},
@@ -41,6 +46,7 @@ export const {
   setNewsFlags,
   setSalesFlags,
   setServicesFlags,
+  setUserFlags,
 } = flaggedSlice.actions;
 
 export default flaggedSlice.reducer;
