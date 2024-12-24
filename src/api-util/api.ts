@@ -9,7 +9,7 @@ axiosInstance.interceptors.request.use((config: any) => {
   const localUser = getLocalStorageItem('user');
   const accessToken = localUser ? JSON.parse(localUser).token : null;
 
-  config.baseURL = import.meta.env.VITE_SERVER_PORT;
+  config.baseURL = `${import.meta.env.VITE_SERVER_PORT}/api`;
 
   const excludedEndpoints = [endpoints.auth.login];
 
