@@ -20,6 +20,7 @@ import 'primereact/resources/primereact.min.css';
 import Learning from './pages/Learning';
 import ResetPassword from './pages/ResetPassword';
 import Redirection from './pages/Redirection';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
         </Route>
         <Route path="/reset-password" Component={ResetPassword} />
         <Route path="/redirect" Component={Redirection} />
+        <Route path="/privacy-policy" Component={PrivacyPolicy} />
         <Route path="*" Component={Notfound} />
       </Routes>
 
