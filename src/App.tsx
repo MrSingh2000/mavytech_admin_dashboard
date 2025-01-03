@@ -21,6 +21,7 @@ import Learning from './pages/Learning';
 import ResetPassword from './pages/ResetPassword';
 import Redirection from './pages/Redirection';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import ContactUs from './pages/Contactus';
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
         <Route path="/reset-password" Component={ResetPassword} />
         <Route path="/redirect" Component={Redirection} />
         <Route path="/privacy-policy" Component={PrivacyPolicy} />
+        <Route path="/contact" Component={ContactUs} />
         <Route path="*" Component={Notfound} />
       </Routes>
 
