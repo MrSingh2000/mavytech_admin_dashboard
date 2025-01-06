@@ -19,7 +19,7 @@ function SideNav() {
     {
       icon: <IoHomeOutline />,
       title: 'Dashboard',
-      navLink: '/',
+      navLink: '/home',
     },
     {
       icon: <TbWashMachine />,

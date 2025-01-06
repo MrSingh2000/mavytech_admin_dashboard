@@ -22,6 +22,7 @@ import ResetPassword from './pages/ResetPassword';
 import Redirection from './pages/Redirection';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import ContactUs from './pages/Contactus';
+import AppHomepage from './pages/AppHomepage';
 
 function App() {
   return (
@@ -39,9 +40,10 @@ function App() {
         theme="light"
       />
       <Routes>
+        <Route path="/" Component={AppHomepage} />
         <Route path="/login" Component={Login} />
         <Route path="/" element={<AuthenticatedRoute />}>
-          <Route path="" Component={Home} />
+          <Route path="home" Component={Home} />
           <Route path="equipment" Component={Equipment} />
           <Route path="advertisement" Component={Advertisement} />
           <Route path="documents" element={<Documents />} />
