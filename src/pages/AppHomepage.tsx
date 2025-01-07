@@ -50,12 +50,13 @@ function AppHomepage() {
           </h2>
           <p className="text-[#4C4DDC] mt-2">
             Read our{' '}
-            <Link
-              to={'/privacy-policy'}
+            <a
+              href='https://mavytechsolutions.github.io/mavytech_privacy_policy/'
+              target='_blank'
               className="text-[#FF6FD8] underline hover:text-[#4C4DDC]"
             >
               Privacy Policy
-            </Link>{' '}
+            </a>{' '}
             to understand how we protect your data.
           </p>
         </div>
