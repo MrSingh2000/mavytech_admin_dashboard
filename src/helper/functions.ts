@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import noImage from '../assets/noImage.png';
 
 export const getLocalStorageItem = (item: string): string | null => {
   return localStorage.getItem(item);
@@ -39,10 +40,10 @@ export const showToast = (
 };
 
 export const createUrl = (baseUrl: string): string => {
+  if (!baseUrl) return noImage;
   if (baseUrl.includes('http')) return baseUrl;
-  return `${import.meta.env.VITE_SERVER_PORT}${baseUrl}`;
+  return `${import.meta.env.VITE_SERVER_PORT}/api${baseUrl}`;
 };
-
 
 export const fetchLearningThumbnail = (id: string): string => {
   if (!id) return '';

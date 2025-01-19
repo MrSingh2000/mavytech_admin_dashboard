@@ -76,7 +76,7 @@ function EquipmentForm({ selectedEquipment, setSelectedEquipment }: Props) {
     if (files.serviceManual) data.append('serviceManual', files.serviceManual);
 
     await axiosInstance({
-      url: `${import.meta.env.VITE_SERVER_PORT}${
+      url: `${import.meta.env.VITE_SERVER_PORT}/api${
         selectedEquipment
           ? `${endpoints.equipment.update}/${selectedEquipment._id}`
           : endpoints.equipment.create

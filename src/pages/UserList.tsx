@@ -343,7 +343,7 @@ const UserDetails = ({ data }: ItemProps) => {
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
         <p className="text-gray-900 whitespace-no-wrap text-center">
           <Avatar
-            image={data.imageUrl ? createUrl(data.imageUrl) : ''}
+            image={data.imageUrl ? createUrl(data.imageUrl) : createUrl('')}
             shape="circle"
             size="xlarge"
             className="border-2 justify-stretch border-green-600"

@@ -238,7 +238,9 @@ const ListRow = ({ data }: ItemProps) => {
             : data?.postModel === FlaggedModels.NEWS
             ? (data?.postDetails as NewsType)?.postedBy?.name
             : data?.postModel === FlaggedModels.USER
-            ? (data?.postDetails as UserType)?.name
+            ? (data?.postDetails as UserType)?.name ?? (
+                <span className="text-red-600">Deleted user</span>
+              )
             : null}
         </p>
       </td>
@@ -249,7 +251,9 @@ const ListRow = ({ data }: ItemProps) => {
       </td>
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
         <p className="text-gray-900 whitespace-no-wrap text-center">
-          {data?.reportedBy?.name}
+          {data?.reportedBy?.name ?? (
+            <span className="text-red-600">Deleted user</span>
+          )}
         </p>
       </td>
       <td className="px-5 py-5 text-sm bg-white border-b border-gray-200 justify-center align-middle items-center">
@@ -433,25 +437,28 @@ const ListRow = ({ data }: ItemProps) => {
 
             <p className="font-bold text-black text-lg text-left w-full">{}</p>
             <p className="font-bold text-black text-base text-left w-full">
-              {(data?.postDetails as UserType)?.name}
+              {(data?.postDetails as UserType)?.name ?? 'Deleted user'}
             </p>
 
             <p className="text-right w-full text-sm">
-              {(data?.postDetails as UserType)?.email}
+              {(data?.postDetails as UserType)?.email ?? 'Null'}
             </p>
             <p className="text-right w-full text-sm">
               {(data?.postDetails as UserType)?.phone.code +
                 (data?.postDetails as UserType)?.phone.number}
             </p>
             <p className="text-right w-full text-sm">
-              {(data?.postDetails as UserType)?.state},{' '}
-              {(data?.postDetails as UserType)?.country}
+              {(data?.postDetails as UserType)?.state ?? 'Null'},{' '}
+              {(data?.postDetails as UserType)?.country ?? 'Null'}
             </p>
             <p className="text-left w-full text-sm">
-              Subscription - {(data?.postDetails as UserType)?.subscriptionStatus}
+              Subscription -{' '}
+              {(data?.postDetails as UserType)?.subscriptionStatus ?? 'Null'}
             </p>
             <p className="text-left w-full text-sm">
-              Sub. exp. - {(data?.postDetails as UserType)?.subscriptionExpirationDate ?? 'none'}
+              Sub. exp. -{' '}
+              {(data?.postDetails as UserType)?.subscriptionExpirationDate ??
+                'none'}
             </p>
             {/* <div className="flex flex-row gap-4 justify-start w-full my-2">
               {(data?.postDetails as UserType)?.tags.map((item) => (
